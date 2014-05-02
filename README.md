@@ -1,17 +1,19 @@
 # csslint-cli [![Build Status](https://secure.travis-ci.org/dmi3y/csslint-cli.png?branch=master)](http://travis-ci.org/dmi3y/csslint-cli)
 
-Rearrangement of node csslint cli with following:
+Rearrangement of node csslint cli with following (higher priority on top):
 
 - [ ] Replicate current csslint cli functionality for node in modular way for easier tweaks.
-- [ ] Add more user [friendly UI goodies](https://github.com/sindresorhus/chalk).
-- [ ] Look up the `.csslintrc` file from cwd, and sort of lookdown.
+- [ ] Transparancy of how different rulesets options affects final output.
 - [ ] Rethink how options overriding works, sort of `--melt` parameter for cli.
-- [ ] More transparancy how different rulesets options affects final output.
+- [ ] Look up the `.csslintrc` file from cwd, and sort of lookdown too.
+- [X] Pass multiply targets via cli.
 - [ ] Pass path to arbitrary `.csslintrc` configs directly through cli.
+- [ ] `.csslintrc` multiformat support (native + jshint flavored).
+- [ ] Add more user friendly [UI goodies](https://github.com/sindresorhus/chalk).
+- [ ] Relaxed CLI [parameters](https://github.com/substack/minimist).
 
 ## Getting Started
 _(Coming soon)_
-
 
 ## Documentation
 _(Coming soon)_
