@@ -1,30 +1,30 @@
 {
-    "options": {
+    "main": {
         "ignore": {
+            "format" : "<rule[,rule]+>",
+            "description" : "Indicate which rules to ignore completely."
             "default": 0,
-            "alias": [false, "0", "false"]
+            "alias": ["0", "false"]
         },
         "warnings": {
+            "format" : "<rule[,rule]+>",
+            "description" : "Indicate which rules to include as warnings."
             "default": 1,
             "alias": ["1", ""]
         },
         "errors": {
+            "format" : "<rule[,rule]+>",
+            "description" : "Indicate which rules to include as errors."
             "default": 2,
-            "alias": [true, "2", "true"]
+            "alias": ["2", "true"]
         }
     },
-    "dictionary": {
-        "ignore"      : { "format" : "<rule[,rule]+>",         "description" : "Indicate which rules to ignore completely."},
-        "warnings"    : { "format" : "<rule[,rule]+>",         "description" : "Indicate which rules to include as warnings."},
-        "errors"      : { "format" : "<rule[,rule]+>",         "description" : "Indicate which rules to include as errors."},
-
-        "cli": {
-            "help"        : { "format" : "",                       "description" : "Displays this information."},
-            "version"     : { "format" : "",                       "description" : "Outputs the current version number."},
-            "list-rules"  : { "format" : "",                       "description" : "Outputs all of the rules available."},
-            "format"      : { "format" : "<format>",               "description" : "Indicate which format to use for output."},
-            "quiet"       : { "format" : "",                       "description" : "Only output when errors are present."},
-            "exclude-list": { "format" : "<file|dir[,file|dir]+>", "description" : "Indicate which files/directories to exclude from being linted."}
-        }
+    "cli": {
+        "help"        : { "format" : "",                       "description" : "Displays this information."},
+        "version"     : { "format" : "",                       "description" : "Outputs the current version number."},
+        "list-rules"  : { "format" : "",                       "description" : "Outputs all of the rules available."},
+        "format"      : { "format" : "<format>",               "description" : "Indicate which format to use for output."},
+        "quiet"       : { "format" : "",                       "description" : "Only output when errors are present."},
+        "exclude-list": { "format" : "<file|dir[,file|dir]+>", "description" : "Indicate which files/directories to exclude from being linted."}
     }
 }
