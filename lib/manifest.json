@@ -2,19 +2,19 @@
     "main": {
         "ignore": {
             "format" : "<rule[,rule]+>",
-            "description" : "Indicate which rules to ignore completely."
+            "description" : "Indicate which rules to ignore completely.",
             "default": 0,
             "alias": ["0", "false"]
         },
         "warnings": {
             "format" : "<rule[,rule]+>",
-            "description" : "Indicate which rules to include as warnings."
+            "description" : "Indicate which rules to include as warnings.",
             "default": 1,
             "alias": ["1", ""]
         },
         "errors": {
             "format" : "<rule[,rule]+>",
-            "description" : "Indicate which rules to include as errors."
+            "description" : "Indicate which rules to include as errors.",
             "default": 2,
             "alias": ["2", "true"]
         }

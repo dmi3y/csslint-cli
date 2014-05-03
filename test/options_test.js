@@ -1,6 +1,6 @@
 'use strict';
 
-var csslintCli = require('../lib/csslint-cli.js');
+var optionsHelper = require('../lib/options-helper.js');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -22,15 +22,29 @@ var csslintCli = require('../lib/csslint-cli.js');
     test.ifError(value)
 */
 
-exports.csslintCli = {
+function footprint(meth, arg) {
+  return JSON.stringify(optionsHelper[meth](arg));
+}
+
+exports.optionsHelper = {
   setUp: function(done) {
     // setup here
     done();
   },
-  'no args': function(test) {
-    test.expect(1);
-    // tests here
-    test.equal(csslintCli.awesome(), 'awesome', 'should be awesome.');
+  'parseRc': function(test) {
+    var
+      rcstr1 = footprint('parseRc','{"a":["b","c","d"], "e":["f"]}'),
+      rcstr2 = footprint('parseRc','--a=b,c,d --e=f');
+
+    test.equal(rcstr1, rcstr2);
+    test.done();
+  },
+  'parseCli': function(test) {
+    var
+      rcstr1 = '{"options":{"a":["b","c","d"],"e":["f"]},"targets":["g","h"]}',
+      rcstr2 = footprint('parseCli',['--a=b,c,d', '--e=f', 'g', 'h']);
+
+    test.equal(rcstr1, rcstr2);
     test.done();
   }
 };
