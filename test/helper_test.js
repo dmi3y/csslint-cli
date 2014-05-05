@@ -3,7 +3,7 @@
 var
     optionsHelper = require('../lib/helper.js'),
     // _ = require('lodash'),
-    cwd_backup;
+    cwd_backup = process.cwd();
 
 function footprint(meth/*, arguments*/) {
   var
@@ -24,7 +24,6 @@ function footprint(meth/*, arguments*/) {
 
 exports.optionsHelper = {
   setUp: function(done) {
-    cwd_backup = process.cwd();
     done();
   },
   tearDown: function(done) {
@@ -110,12 +109,26 @@ exports.optionsHelper = {
       resOpt;
 
     process.chdir('./test/assets/1/2/');
-    externalRc = optionsHelper.checkExternalRc();
+    externalRc = optionsHelper.checkExternalRc('.csslintrc');
     resOpt = footprint(externalRc.options);
 
     test.expect(2);
     test.equal(expOpt, resOpt);
     test.ok(externalRc.path.indexOf(expPath) > 0);
+
+    test.done();
+  },
+
+  'lookup': function(test) {
+    var
+      expPath = 'csslint-cli\\test\\assets\\abc',
+      resPath;
+
+    process.chdir('./test/assets/1/2/');
+    resPath = optionsHelper.lookup('abc');
+
+    test.expect(1);
+    test.ok(resPath.indexOf(expPath) > 0);
 
     test.done();
   }
