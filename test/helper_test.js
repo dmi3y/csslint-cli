@@ -1,9 +1,7 @@
 'use strict';
 
 var
-    optionsHelper = require('../lib/helper.js'),
-    // _ = require('lodash'),
-    cwd_backup = process.cwd();
+    optionsHelper = require('../lib/helper.js');
 
 function footprint(meth/*, arguments*/) {
   var
@@ -26,24 +24,21 @@ exports.optionsHelper = {
   setUp: function(done) {
     done();
   },
-  tearDown: function(done) {
-    process.chdir(cwd_backup);
-    done();
-  },
-  'parseRc': function(test) {
+
+  'parseCli': function(test) {
     var
-      rcstr1 = footprint('parseRc','{"a":["b","c","d"], "e":["f"]}'),
-      rcstr2 = footprint('parseRc','--a=b,c,d --e=f');
+      rcstr1 = '{"options":{"a":["b","c","d"],"e":["f"]},"targets":["g","h"]}',
+      rcstr2 = footprint('parseCli',['--a=b,c,d', '--e=f', 'g', 'h']);
 
     test.expect(1);
     test.equal(rcstr1, rcstr2);
     test.done();
   },
 
-  'parseCli': function(test) {
+  'parseRc': function(test) {
     var
-      rcstr1 = '{"options":{"a":["b","c","d"],"e":["f"]},"targets":["g","h"]}',
-      rcstr2 = footprint('parseCli',['--a=b,c,d', '--e=f', 'g', 'h']);
+      rcstr1 = footprint('parseRc','{"a":["b","c","d"], "e":["f"]}'),
+      rcstr2 = footprint('parseRc','--a=b,c,d --e=f');
 
     test.expect(1);
     test.equal(rcstr1, rcstr2);
@@ -97,38 +92,6 @@ exports.optionsHelper = {
     test.expect(2);
     test.equal(rcstr1, rcstr2);
     test.equal(rcstr1, rcstr3);
-
-    test.done();
-  },
-
-  'checkExternalRc': function(test) {
-    var
-      externalRc,
-      expPath = 'csslint-cli\\test\\assets\\.csslintrc',
-      expOpt = '{"warnings":["id","zero-units"],"errors":["include"]}',
-      resOpt;
-
-    process.chdir('./test/assets/1/2/');
-    externalRc = optionsHelper.checkExternalRc('.csslintrc');
-    resOpt = footprint(externalRc.options);
-
-    test.expect(2);
-    test.equal(expOpt, resOpt);
-    test.ok(externalRc.path.indexOf(expPath) > 0);
-
-    test.done();
-  },
-
-  'lookup': function(test) {
-    var
-      expPath = 'csslint-cli\\test\\assets\\abc',
-      resPath;
-
-    process.chdir('./test/assets/1/2/');
-    resPath = optionsHelper.lookup('abc');
-
-    test.expect(1);
-    test.ok(resPath.indexOf(expPath) > 0);
 
     test.done();
   }

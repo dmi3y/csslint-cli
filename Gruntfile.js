@@ -9,7 +9,7 @@ module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
     nodeunit: {
-      files: ['test/**/*_test.js']
+      files: ['test/helper_test.js']
     },
     jshint: {
       options: {
@@ -44,5 +44,6 @@ module.exports = function (grunt) {
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'nodeunit']);
+  grunt.registerTask('test', ['nodeunit']);
 
 };
