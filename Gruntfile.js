@@ -9,7 +9,7 @@ module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
     nodeunit: {
-      files: ['test/helper_test.js']
+      files: ['test/**/*_test.js']
     },
     jshint: {
       options: {
