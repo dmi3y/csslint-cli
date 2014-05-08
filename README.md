@@ -2,9 +2,7 @@
 
 ## CSSLint-CLI
 
-Unofficial project to experiment and explore cli architecture possiblities for [CSSLint](https://github.com/CSSLint/csslint) tool and reimagine how it could be redesigned to unleash full power of this linting tool.
-
-Headsup, works only for Nodejs, no Rhino or WSH support.
+Alternative NodeJs based CLI tool for [CSSLint](https://github.com/CSSLint/csslint).
 
 ## Early stage tasks to complete:
 
@@ -14,7 +12,7 @@ Headsup, works only for Nodejs, no Rhino or WSH support.
 - [x] Look up the `.csslintrc` file from cwd, and sort of lookdown too.
 - [x] Pass multiply targets via cli.
 - [ ] Pass path to arbitrary `.csslintrc` configs directly through cli.
-- [ ] `.csslintrc` multiformat support (native + jshint flavored).
+- [ ] `.csslintrc` multiformat support (native + jshint flavored) with comments.
 - [x] Plug in more user friendly [UI goodies](https://github.com/sindresorhus/chalk).
 - [x] Relaxed CLI [parameters](https://github.com/substack/minimist).
 
