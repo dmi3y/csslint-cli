@@ -1,2 +1,2 @@
---warnings=id,zero-units
+--warnings=ids,zero-units
 --errors=include
