@@ -2,7 +2,7 @@
 
 ## CSSLint-CLI
 
-Alternative for [CSSLint](https://github.com/CSSLint/csslint) NodeJs CLI.
+Alternative for [CSSLint](https://github.com/CSSLint/csslint) CLI.
 
 ## Early stage tasks to complete:
 
