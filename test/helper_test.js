@@ -17,11 +17,11 @@ exports.helper = {
 
     'parseRc': function(test) {
         var
-            exp = c.footprint('parseRc', '{"a":["b","c","d"], "e":["f"]}'),
-            res = c.footprint('parseRc', '--a=b,c,d --e=f');
+            res0 = c.footprint('parseRc', '{"a":["b"/*a*/,"c","d"], "e":["f"]}//b'),
+            res1 = c.footprint('parseRc', '--a=b,c,d --e=f');
 
         test.expect(1);
-        test.equal(exp, res);
+        test.equal(res0, res1);
         test.done();
     },
 

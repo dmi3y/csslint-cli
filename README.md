@@ -1,4 +1,6 @@
-# csslint-cli [![Build Status](https://secure.travis-ci.org/dmi3y/csslint-cli.png?branch=master)](http://travis-ci.org/dmi3y/csslint-cli)
+# csslint-cli
+[![Build Status](http://img.shields.io/travis/dmi3y/csslint-cli.svg?branch=master)](http://travis-ci.org/dmi3y/csslint-cli)
+[![Coverage Status](https://img.shields.io/coveralls/dmi3y/csslint-cli.svg)](https://coveralls.io/r/dmi3y/csslint-cli)
 
 ## CSSLint-CLI
 
@@ -22,7 +24,7 @@
 - [x] Look up the `.csslintrc` file from cwd, and sort of lookdown too.
 - [x] Pass multiply targets via cli.
 - [ ] Pass path to arbitrary `.csslintrc` configs directly through cli.
-- [ ] Native json `.csslintrc`   with comments.
+- [x] Native json `.csslintrc` with [comments](https://github.com/sindresorhus/strip-json-comments).
 - [ ] JSHint flavored `.csslintrc` format.
 - [x] Plug in more user friendly [UI goodies](https://github.com/sindresorhus/chalk).
 - [x] Relaxed CLI [parameters](https://github.com/substack/minimist).
