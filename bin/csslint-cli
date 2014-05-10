@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+/*
+ * csslint-cli
+ * user/repo
+ *
+ * Copyright (c) 2014 Dmitry Lapshukov
+ * Licensed under the MIT license.
+ */
+
+var
+    args = process.argv.slice(2),
+    csslintCli = require('../lib/csslint-cli');
+
+csslintCli.init(args);
