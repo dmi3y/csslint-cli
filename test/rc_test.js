@@ -19,12 +19,14 @@ exports.rc = {
             }),
             rcs = [
                 {
-                    base: 'a/b/c',
-                    rules: {}
+                    base: 'a',
+                    rules: {},
+                    ord: 1
                 },
                 {
-                    base: 'a',
-                    rules: {}
+                    base: 'a/b/c',
+                    rules: {},
+                    ord: 0
                 }
             ],
             files = [
