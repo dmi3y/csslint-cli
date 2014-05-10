@@ -1,34 +1,14 @@
 'use strict';
 
 var
-optionsHelper = require('../lib/helper.js');
+    h = require('../lib/helper.js'),
+    c = require('./common')(h);
 
-function footprint(meth /*, arguments*/ ) {
-    var
-        args = arguments,
-        tostr;
-
-    if (optionsHelper[meth]) {
-
-        Array.prototype.shift.call(args);
-        tostr = optionsHelper[meth].apply(optionsHelper, args);
-    } else {
-
-        tostr = meth;
-    }
-
-    return JSON.stringify(tostr);
-}
-
-exports.optionsHelper = {
-    setUp: function(done) {
-        done();
-    },
-
+exports.helper = {
     'parseCli': function(test) {
         var
             exp = '{"options":{"a":["b","c","d"],"e":["f"]},"targets":["g","h"]}',
-            res = footprint('parseCli', ['--a=b,c,d', '--e=f', 'g', 'h']);
+            res = c.footprint('parseCli', ['--a=b,c,d', '--e=f', 'g', 'h']);
 
         test.expect(1);
         test.equal(exp, res);
@@ -37,8 +17,8 @@ exports.optionsHelper = {
 
     'parseRc': function(test) {
         var
-            exp = footprint('parseRc', '{"a":["b","c","d"], "e":["f"]}'),
-            res = footprint('parseRc', '--a=b,c,d --e=f');
+            exp = c.footprint('parseRc', '{"a":["b","c","d"], "e":["f"]}'),
+            res = c.footprint('parseRc', '--a=b,c,d --e=f');
 
         test.expect(1);
         test.equal(exp, res);
@@ -60,13 +40,13 @@ exports.optionsHelper = {
                 'list-rules': 1
             },
             exp1 = 'null',
-            res1 = footprint('filterUnknown', fulllist),
+            res1 = c.footprint('filterUnknown', fulllist),
 
             exp2 = '["help","version","format","quiet","exclude-list","list-rules"]',
-            res2 = footprint('filterUnknown', fulllist, 'main'),
+            res2 = c.footprint('filterUnknown', fulllist, 'main'),
 
             exp3 = '["ignore","warnings","errors"]',
-            res3 = footprint('filterUnknown', fulllist, 'cli');
+            res3 = c.footprint('filterUnknown', fulllist, 'cli');
 
         test.expect(3);
         test.equal(exp1, res1, 'all options');
@@ -79,12 +59,12 @@ exports.optionsHelper = {
     'optionsToExplicitRulesets': function(test) {
         var
             exp = '{"a":0,"b":0,"c":0,"d":0,"e":1,"f":1,"g":1,"h":2,"i":2,"j":2,"k":2}',
-            res1 = footprint('optionsToExplicitRulesets', {
+            res1 = c.footprint('optionsToExplicitRulesets', {
                 "ignore": ["a", "b", "c", "d"],
                 "warnings": ["e", "f", "g"],
                 "errors": ["h", "i", "j", "k"]
             }),
-            res2 = footprint('optionsToExplicitRulesets', {
+            res2 = c.footprint('optionsToExplicitRulesets', {
                 "a": "0",
                 "b": "false",
                 "c": false,
