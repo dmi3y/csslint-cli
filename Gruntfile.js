@@ -1,13 +1,11 @@
 'use strict';
 
 module.exports = function (grunt) {
-  // Show elapsed time at the end
   require('time-grunt')(grunt);
-  // Load all grunt tasks
   require('load-grunt-tasks')(grunt);
 
-  // Project configuration.
   grunt.initConfig({
+    pkg: grunt.file.readJSON('./package.json'),
     nodeunit: {
       files: ['test/**/*_test.js']
     },
@@ -22,27 +20,32 @@ module.exports = function (grunt) {
       lib: {
         src: ['lib/**/*.js']
       },
+      src: {
+        src: ['src/**/*.js']
+      },
       test: {
         src: ['test/**/*.js']
       }
     },
     watch: {
-      gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
-      },
-      lib: {
-        files: '<%= jshint.lib.src %>',
-        tasks: ['jshint:lib', 'nodeunit']
-      },
-      test: {
-        files: '<%= jshint.test.src %>',
-        tasks: ['jshint:test', 'nodeunit']
+      src: {
+        files: '<%= jshint.src.src %>',
+        tasks: ['jshint:src', 'nodeunit']
       }
-    }
+    },
+    copy: {
+      main: {
+        src: './src/csslint-cli.js',
+        dest: './build/csslint-cli.js',
+        options: {
+          process: function (content) {
+            return content.replace(/<%- @VERSION %>/g, grunt.config.data.pkg.version);
+          }
+        }
+      },
+    },
   });
 
-  // Default task.
   grunt.registerTask('default', ['jshint', 'nodeunit']);
   grunt.registerTask('test', ['nodeunit']);
 

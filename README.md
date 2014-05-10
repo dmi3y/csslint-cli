@@ -2,7 +2,7 @@
 
 ## CSSLint-CLI
 
-Alternative CLI for [CSSLint](https://github.com/CSSLint/csslint).
+> Alternative CLI for [CSSLint](https://github.com/CSSLint/csslint).
 
 ## Early stage tasks to complete:
 
@@ -22,7 +22,8 @@ Alternative CLI for [CSSLint](https://github.com/CSSLint/csslint).
 - [x] Look up the `.csslintrc` file from cwd, and sort of lookdown too.
 - [x] Pass multiply targets via cli.
 - [ ] Pass path to arbitrary `.csslintrc` configs directly through cli.
-- [ ] `.csslintrc` multiformat support (native + jshint flavored) with comments.
+- [ ] Native json `.csslintrc`   with comments.
+- [ ] JSHint flavored `.csslintrc` format.
 - [x] Plug in more user friendly [UI goodies](https://github.com/sindresorhus/chalk).
 - [x] Relaxed CLI [parameters](https://github.com/substack/minimist).
 

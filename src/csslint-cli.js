@@ -12,13 +12,13 @@ function init(args) {
     var
         csslint = require('csslint').CSSLint,
         csslintRules,
-        optionsHelper = require('./helper'),
-        printer = require('./printer'),
-        rc = require('./rc'),
-        u = require('./utils'),
+        optionsHelper = require('../lib/helper'),
+        printer = require('../lib/printer'),
+        rc = require('../lib/rc'),
+        fu = require('../lib/nfsu'),
+        u = require('../lib/utils'),
 
         parsedCliObj,
-        unknownOptions,
         optionsCli,
         targets,
         workset,
@@ -40,15 +40,9 @@ function init(args) {
 
     parsedCliObj = optionsHelper.parseCli(args);
 
-    optionsCli = parsedCliObj.options;
+    optionsCli = rc.validateCli(parsedCliObj.options);
     targets = parsedCliObj.targets;
     parsedCliObj = null;
-
-    unknownOptions = optionsHelper.filterUnknown(optionsCli);
-    if ( unknownOptions ) {
-        printer.unknown(unknownOptions);
-        process.exit(1);
-    }
 
     if ( optionsCli.help ) {
         printer.help();
@@ -65,7 +59,7 @@ function init(args) {
         process.exit(1);
     }
 
-    workset = rc.lookdownFiles(targets, ['.csslintrc', '.css']);
+    workset = fu.lookdownFiles(targets, ['.csslintrc', '.css']);
 
     rcfiles = rc.validateRcs(workset['.csslintrc']);
     cssfiles = workset['.css'];
@@ -125,5 +119,6 @@ function init(args) {
 }
 
 module.exports = {
-    init: init
+    init: init,
+    version: '<%- @VERSION %>'
 };

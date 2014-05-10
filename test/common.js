@@ -4,12 +4,12 @@ function ftp(meth /*, arguments*/ ) {
     var
         args = arguments,
         tostr,
-        self = this.dij;
+        context = this.dij; // jshint ignore:line
 
-    if (self[meth]) {
+    if (context[meth]) {
 
         Array.prototype.shift.call(args);
-        tostr = self[meth].apply(self, args);
+        tostr = context[meth].apply(context, args);
     } else {
 
         tostr = meth;

@@ -9,6 +9,6 @@
 
 var
     args = process.argv.slice(2),
-    csslintCli = require('../lib/csslint-cli');
+    csslintCli = require('../build/csslint-cli');
 
 csslintCli.init(args);
