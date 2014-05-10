@@ -2,13 +2,23 @@
 
 ## CSSLint-CLI
 
-Alternative NodeJs CLI for [CSSLint](https://github.com/CSSLint/csslint).
+Alternative for [CSSLint](https://github.com/CSSLint/csslint) NodeJs CLI.
 
 ## Early stage tasks to complete:
 
 - [ ] Replicate current csslint cli functionality for node in modular way for easier tweaks.
-- [ ] Transparancy of how different rulesets options affects final output.
+    - ~~ignore~~
+    - ~~warnings~~
+    - ~~errors~~
+    - ~~help~~
+    - ~~version~~
+    - ~~list-rules~~
+    - ~~format~~
+    - ~~quiet~~
+    - exclude-list
+- [x] Transparancy of how different rulesets options affects final output.
 - [ ] Rethink how options overriding works, sort of `--melt` parameter for cli.
+- [ ] Custom reporters hook, plus default one instead of native text formatter.
 - [x] Look up the `.csslintrc` file from cwd, and sort of lookdown too.
 - [x] Pass multiply targets via cli.
 - [ ] Pass path to arbitrary `.csslintrc` configs directly through cli.
