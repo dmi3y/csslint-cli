@@ -3,15 +3,15 @@
   "version": "0.0.0",
   "main": "build/csslint-cli.js",
   "description": "Nodejs CLI tool for csslint",
-  "homepage": "user/repo",
-  "bugs": "user/repo/issues",
+  "homepage": "https://github.com/dmi3y/csslint-cli",
+  "bugs": "https://github.com/dmi3y/csslint-cli/issues",
   "author": {
     "name": "Dmitry",
     "email": "lapshukov@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "user/repo"
+    "url": "https://github.com/dmi3y/csslint-cli"
   },
   "licenses": [
     {
@@ -29,7 +29,8 @@
     "grunt-contrib-jshint": "~0.7.0",
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-watch": "~0.5.0",
-    "grunt-contrib-copy": "~0.5.0"
+    "grunt-contrib-copy": "~0.5.0",
+    "istanbul": "~0.2.8"
   },
   "scripts": {
     "test": "grunt"

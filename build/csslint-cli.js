@@ -25,6 +25,7 @@ function init(args) {
         len,
         base,
         i,
+        excl,
         result,
         formatter,
         block,
@@ -35,8 +36,8 @@ function init(args) {
         rcfiles,
         cssfiles,
         optionsDefault = {},
-        defaultThreshold = 1, // manifest.main.warnings.default
-        cliversion = '0.0.0';
+        optionsFromCli = {},
+        defaultThreshold = 1; // manifest.main.warnings.default
 
     parsedCliObj = optionsHelper.parseCli(args);
 
@@ -48,7 +49,7 @@ function init(args) {
         printer.help();
         process.exit();
     } else if ( optionsCli.version ) {
-        printer.version(csslint.version, cliversion);
+        printer.version(csslint.version, '0.0.0');
         process.exit();
     } else if ( optionsCli['list-rules'] ) {
         csslintRules = csslint.getRules();
@@ -59,7 +60,12 @@ function init(args) {
         process.exit(1);
     }
 
-    workset = fu.lookdownFiles(targets, ['.csslintrc', '.css']);
+    excl = optionsCli['exclude-list'] || [];
+    excl = excl.map(function(el){
+        return u.resolve(process.cwd() + '/' + el);
+    });
+
+    workset = fu.lookdownFiles(targets, ['.csslintrc', '.css'], {excl: excl});
 
     rcfiles = rc.validateRcs(workset['.csslintrc']);
     cssfiles = workset['.css'];
@@ -77,6 +83,7 @@ function init(args) {
         }, optionsDefault);
     }
 
+    optionsFromCli = optionsHelper.filterKnown(optionsCli, 'main');
 
     for (base in rulesets) {
         if ( rulesets.hasOwnProperty(base) ) {
@@ -84,7 +91,7 @@ function init(args) {
 
             files = block.files;
             options = block.rules;
-            u.merge(options, optionsCli);
+            u.merge(options, optionsFromCli);
             options = optionsHelper.optionsToExplicitRulesets(options);
 
             options = u.merge(optionsDefault, options);

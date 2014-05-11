@@ -8,7 +8,7 @@
 
 ## Early stage tasks to complete:
 
-- [ ] Replicate current csslint cli functionality for node in modular way for easier tweaks.
+- [x] Replicate current csslint cli functionality for node in modular way for easier tweaks.
     - ~~ignore~~
     - ~~warnings~~
     - ~~errors~~
@@ -17,7 +17,7 @@
     - ~~list-rules~~
     - ~~format~~
     - ~~quiet~~
-    - exclude-list
+    - ~~exclude-list~~
 - [x] Transparancy of how different rulesets options affects final output.
 - [ ] Rethink how options overriding works, sort of `--melt` parameter for cli.
 - [ ] Custom reporters hook, plus default one instead of native text formatter.
