@@ -1,23 +1,11 @@
-# csslint-cli
-[![Build Status](http://img.shields.io/travis/dmi3y/csslint-cli.svg?branch=master)](http://travis-ci.org/dmi3y/csslint-cli)
-[![Coverage Status](https://img.shields.io/coveralls/dmi3y/csslint-cli.svg)](https://coveralls.io/r/dmi3y/csslint-cli)
+# CSSLint-CLI [![Build Status](http://img.shields.io/travis/dmi3y/csslint-cli.svg?style=flat&branch=master)] (http://travis-ci.org/dmi3y/csslint-cli) [![Coverage Status](https://img.shields.io/coveralls/dmi3y/csslint-cli.svg?style=flat&branch=master)](https://coveralls.io/r/dmi3y/csslint-cli?branch=master)
 
-## CSSLint-CLI
 
 > Alternative CLI for [CSSLint](https://github.com/CSSLint/csslint).
 
 ## Early stage tasks to complete:
 
 - [x] Replicate current csslint cli functionality for node in modular way for easier tweaks.
-    - ~~ignore~~
-    - ~~warnings~~
-    - ~~errors~~
-    - ~~help~~
-    - ~~version~~
-    - ~~list-rules~~
-    - ~~format~~
-    - ~~quiet~~
-    - ~~exclude-list~~
 - [x] Transparancy of how different rulesets options affects final output.
 - [ ] Rethink how options overriding works, sort of `--melt` parameter for cli.
 - [ ] Custom reporters hook, plus default one instead of native text formatter.
