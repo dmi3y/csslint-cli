@@ -30,10 +30,12 @@
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-watch": "~0.5.0",
     "grunt-contrib-copy": "~0.5.0",
-    "istanbul": "~0.2.8"
+    "istanbul": "~0.2.8",
+    "coveralls": "~2.10.0"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt",
+    "coveralls": "istanbul cover test/*_test.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "dependencies": {
     "csslint": "~0.10.0",

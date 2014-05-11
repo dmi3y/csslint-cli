@@ -1,8 +1,6 @@
-# csslint-cli
-[![Build Status](http://img.shields.io/travis/dmi3y/csslint-cli.svg?branch=master)](http://travis-ci.org/dmi3y/csslint-cli)
-[![Coverage Status](https://img.shields.io/coveralls/dmi3y/csslint-cli.svg)](https://coveralls.io/r/dmi3y/csslint-cli)
+[![Build Status](http://img.shields.io/travis/dmi3y/csslint-cli.svg?branch=master)] (http://travis-ci.org/dmi3y/csslint-cli)[![Coverage Status](https://img.shields.io/coveralls/dmi3y/csslint-cli.svg)](https://coveralls.io/r/dmi3y/csslint-cli?branch=master)
 
-## CSSLint-CLI
+# CSSLint-CLI
 
 > Alternative CLI for [CSSLint](https://github.com/CSSLint/csslint).
 
