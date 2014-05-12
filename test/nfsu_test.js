@@ -10,7 +10,7 @@ var
 exports.rc = {
     'lookdownFiles': function(test) {
         var
-            exp1 = c.footprint({
+            exp1 = {
                 '.css': [
                     u.resolve('test/assets/a/a.css'),
                     u.resolve('test/assets/a/b/b.css'),
@@ -21,27 +21,27 @@ exports.rc = {
                 '.csslintrc': [
                     u.resolve('test/assets/a/.csslintrc')
                 ]
-            }),
-            res1 = c.footprint('lookdownFiles', ['test/'], ['.csslintrc', '.css']),
-            exp2 = c.footprint({
+            },
+            res1 = h.lookdownFiles(['test/'], ['.csslintrc', '.css']),
+            exp2 = {
                 '.css': [
                     u.resolve('test/assets/x/x.css')
                 ],
                 '.csslintrc': []
-            }),
-            res2 = c.footprint('lookdownFiles', ['test/'], ['.csslintrc', '.css'], {excl:['test/assets/a', 'test/assets/x/y/z.css']}),
-            exp3 = c.footprint({
+            },
+            res2 = h.lookdownFiles(['test/'], ['.csslintrc', '.css'], {excl:['test/assets/a', 'test/assets/x/y/z.css']}),
+            exp3 = {
                 '.css': [
                     u.resolve('test/assets/x/x.css'),
                     u.resolve('test/assets/x/y/z.css')
                 ]
-            }),
-            res3 = c.footprint('lookdownFiles', ['x/'], ['.css'], {base:'test/assets/'});
+            },
+            res3 = h.lookdownFiles(['x/'], ['.css'], {base:'test/assets/'});
 
         test.expect(3);
-        test.equal(exp1, res1);
-        test.equal(exp2, res2);
-        test.equal(exp3, res3);
+        test.deepEqual(exp1, res1);
+        test.deepEqual(exp2, res2);
+        test.deepEqual(exp3, res3);
         test.done();
     },
     'lookupFile': function(test) {
