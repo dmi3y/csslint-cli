@@ -61,10 +61,6 @@ function init(args) {
     }
 
     excl = optionsCli['exclude-list'] || [];
-    excl = excl.map(function(el){
-        return u.resolve(process.cwd() + '/' + el);
-    });
-
     workset = fu.lookdownFiles(targets, ['.csslintrc', '.css'], {excl: excl});
 
     rcfiles = rc.validateRcs(workset['.csslintrc']);
