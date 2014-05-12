@@ -37,6 +37,19 @@ exports.rc = {
             },
             res3 = h.lookdownFiles(['x/'], ['.css'], {base:'test/assets/'});
 
+        exp1['.css'].sort();
+        exp1['.csslintrc'].sort();
+        res1['.css'].sort();
+        res1['.csslintrc'].sort();
+
+        exp2['.css'].sort();
+        exp2['.csslintrc'].sort();
+        res2['.css'].sort();
+        res2['.csslintrc'].sort();
+
+        exp3['.css'].sort();
+        res3['.css'].sort();
+
         test.expect(3);
         test.deepEqual(exp1, res1);
         test.deepEqual(exp2, res2);
