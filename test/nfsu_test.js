@@ -2,8 +2,7 @@
 
 var
     h = require('../lib/nfsu.js'),
-    u = require('../lib/utils.js'),
-    c = require('./common')(h);
+    u = require('../lib/utils.js');
 
 
 
