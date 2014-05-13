@@ -7,11 +7,14 @@ var
 exports.helper = {
     'parseCli': function(test) {
         var
-            exp = '{"options":{"a":["b","c","d"],"e":["f"]},"targets":["g","h"]}',
-            res = c.footprint('parseCli', ['--a=b,c,d', '--e=f', 'g', 'h']);
+            exp1 = '{"options":{"a":["b","c","d"],"e":["f"]},"targets":["g","h"]}',
+            res1 = c.footprint('parseCli', ['--a=b,c,d', '--e=f', 'g', 'h']),
+            exp2 = '{"options":{},"targets":["g\\\\"]}',
+            res2 = c.footprint('parseCli', ['g\\']);
 
-        test.expect(1);
-        test.equal(exp, res);
+        test.expect(2);
+        test.equal(exp1, res1);
+        test.equal(exp2, res2);
         test.done();
     },
 

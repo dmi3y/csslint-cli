@@ -8,42 +8,21 @@
 
 'use strict';
 
-function init(args) {
-    var
-        csslint = require('csslint').CSSLint,
-        csslintRules,
-        optionsHelper = require('../lib/helper'),
-        printer = require('../lib/printer'),
-        rc = require('../lib/rc'),
-        fu = require('../lib/nfsu'),
-        u = require('../lib/utils'),
+var
+    optionsHelper = require('../lib/helper'),
+    rc = require('../lib/rc'),
+    fu = require('../lib/nfsu'),
+    u = require('../lib/utils'),
+    legacy = require('../lib/legacy'),
+    printer = require('../lib/printer'),
+    csslint = require('csslint').CSSLint,
 
-        parsedCliObj,
-        optionsCli,
-        targets,
-        workset,
-        len,
-        base,
-        i,
-        excl,
-        result,
-        formatter,
-        block,
-        files,
-        rulesets = {},
-        options,
-        input,
-        rcfiles,
-        cssfiles,
-        optionsDefault = {},
-        optionsFromCli = {},
-        defaultThreshold = 1; // manifest.main.warnings.default
+    csslintRules,
+    optionsCli,
+    optionsDefault = {},
+    defaultThreshold = 1; // manifest.main.warnings.default
 
-    parsedCliObj = optionsHelper.parseCli(args);
-
-    optionsCli = rc.validateCli(parsedCliObj.options);
-    targets = parsedCliObj.targets;
-    parsedCliObj = null;
+function checkCli(optionsCli, targets) {
 
     if ( optionsCli.help ) {
         printer.help();
@@ -59,17 +38,9 @@ function init(args) {
         printer.noTargets();
         process.exit(1);
     }
+}
 
-    excl = optionsCli['exclude-list'] || [];
-    workset = fu.lookdownFiles(targets, ['.csslintrc', '.css'], {excl: excl});
-
-    rcfiles = rc.validateRcs(workset['.csslintrc']);
-    cssfiles = workset['.css'];
-    workset = '';
-
-
-
-    rulesets = rc.shuffleToRulesets(rcfiles, cssfiles);
+function setDefaultOptions() {
 
     if ( defaultThreshold ) {
 
@@ -78,8 +49,19 @@ function init(args) {
             res[it.id] = defaultThreshold;
         }, optionsDefault);
     }
+}
 
-    optionsFromCli = optionsHelper.filterKnown(optionsCli, 'main');
+function readySteadyGo (rulesets) {
+    var
+        len,
+        base,
+        i,
+        result,
+        block,
+        files,
+        options,
+        input,
+        optionsFromCli = optionsHelper.filterKnown(optionsCli, 'main');
 
     for (base in rulesets) {
         if ( rulesets.hasOwnProperty(base) ) {
@@ -106,17 +88,52 @@ function init(args) {
                     optionsCli.isEmpty = true;
                 }
 
-                formatter = csslint.getFormatter(optionsCli.format || "text");
-
-                rc.processFile(
+                legacy.processFile(
                     result,
-                    formatter,
+                    csslint.getFormatter(optionsCli.format || "text"),
                     optionsCli
                 );
             }
 
         }
     }
+}
+
+function init(args) {
+    var
+
+        parsedCliObj,
+        targets,
+        workset,
+        excl,
+        rulesets = {},
+        shuffledObj,
+        rcfiles,
+        cssfiles;
+
+    parsedCliObj = optionsHelper.parseCli(args);
+
+    optionsCli = rc.validateCli(parsedCliObj.options);
+    targets = parsedCliObj.targets;
+    parsedCliObj = null;
+
+    checkCli(optionsCli, targets);
+
+    excl = optionsCli['exclude-list'] || [];
+    workset = fu.lookdownFiles(targets, ['.csslintrc', '.css'], {excl: excl});
+
+    rcfiles = rc.validateRcs(workset['.csslintrc']);
+    cssfiles = workset['.css']; // pre validate css?
+    workset = null;
+
+    shuffledObj = rc.shuffleToRulesets(rcfiles, cssfiles);
+
+    rulesets = u.merge(shuffledObj.rulesets, rc.sortTheRest(shuffledObj.files));
+
+    setDefaultOptions();
+
+
+    readySteadyGo(rulesets);
 
     process.exit();
 }
