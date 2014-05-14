@@ -38,8 +38,7 @@
   },
   "scripts": {
     "build": "grunt",
-    "test": "grunt test",
-    "coveralls": "istanbul cover test/*_test.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | coveralls"
+    "test": "grunt test"
   },
   "dependencies": {
     "csslint": "~0.10.0",
