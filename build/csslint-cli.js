@@ -11,7 +11,7 @@
 var
     optionsHelper = require('../lib/helper'),
     rc = require('../lib/rc'),
-    fu = require('../lib/nfsu'),
+    fu = require('nfsu'),
     u = require('../lib/utils'),
     legacy = require('../lib/legacy'),
     printer = require('../lib/printer'),
@@ -78,7 +78,7 @@ function readySteadyGo (rulesets) {
 
             for (i = 0; i < len; i += 1) {
 
-                input = u.readFile(files[i]);
+                input = fu.readFileStr(files[i]);
                 optionsCli.file = files[i].replace(process.cwd(), '');
                 optionsCli.fullPath = files[i];
 
@@ -120,7 +120,7 @@ function init(args) {
     checkCli(optionsCli, targets);
 
     excl = optionsCli['exclude-list'] || [];
-    workset = fu.lookdownFiles(targets, ['.csslintrc', '.css'], {excl: excl});
+    workset = fu.lookdownFilesByExts(targets, ['.csslintrc', '.css'], {excl: excl});
 
     rcfiles = rc.validateRcs(workset['.csslintrc']);
     cssfiles = workset['.css']; // pre validate css?

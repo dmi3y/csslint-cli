@@ -3,11 +3,15 @@
   "version": "0.0.0",
   "main": "build/csslint-cli.js",
   "description": "Nodejs CLI tool for csslint",
+  "preferGlobal": true,
   "homepage": "https://github.com/dmi3y/csslint-cli",
   "bugs": "https://github.com/dmi3y/csslint-cli/issues",
   "author": {
     "name": "Dmitry",
     "email": "lapshukov@gmail.com"
+  },
+  "bin": {
+    "csslint-cli": "./bin/csslint-cli"
   },
   "repository": {
     "type": "git",
@@ -29,12 +33,13 @@
     "grunt-contrib-jshint": "~0.7.0",
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-watch": "~0.5.0",
-    "grunt-contrib-copy": "~0.5.0"
+    "grunt-contrib-copy": "~0.5.0",
+    "nfsu": "0.0.1"
   },
   "scripts": {
     "build": "grunt",
     "test": "grunt test",
-    "coveralls": "istanbul cover test/*_test.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
+    "coveralls": "istanbul cover test/*_test.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "csslint": "~0.10.0",
