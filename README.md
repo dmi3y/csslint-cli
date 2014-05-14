@@ -1,4 +1,4 @@
-# CSSLint-CLI [![Build Status](http://img.shields.io/travis/dmi3y/csslint-cli.svg?style=flat&branch=master)](http://travis-ci.org/dmi3y/csslint-cli) [![Coverage Status](https://img.shields.io/coveralls/dmi3y/csslint-cli.svg?style=flat&branch=master)](https://coveralls.io/r/dmi3y/csslint-cli?branch=master) [![Code Climate](http://img.shields.io/codeclimate/github/dmi3y/csslint-cli.svg?style=flat&branch=master)](https://codeclimate.com/github/dmi3y/csslint-cli?branch=master)
+# CSSLint-CLI [![Build Status](http://img.shields.io/travis/dmi3y/csslint-cli.svg?style=flat&branch=master)](http://travis-ci.org/dmi3y/csslint-cli) [![Coverage Status](http://img.shields.io/codeclimate/coverage/github/dmi3y/csslint-cli.svg?style=flat)](https://codeclimate.com/github/dmi3y/csslint-cli/code?sort=covered_percent&sort_direction=desc) [![Code Climate](http://img.shields.io/codeclimate/github/dmi3y/csslint-cli.svg?style=flat&branch=master)](https://codeclimate.com/github/dmi3y/csslint-cli?branch=master)
 
 
 > Alternative CLI for [CSSLint](https://github.com/CSSLint/csslint).
