@@ -3,10 +3,6 @@ node_js:
   - '0.10'
   - '0.8'
   
-env:
-  global:
-    - CODECLIMATE_REPO_TOKEN=8648704d8b312e9f7e663f6a0f32519ef717cf85673029e6f2ddbe582c5386cc 
-
 branches:
   only:
     - master
