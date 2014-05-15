@@ -1,13 +1,12 @@
 'use strict';
 
 var
-    h = require('../lib/rc.js'),
-    c = require('./common')(h);
+    h = require('../lib/rc.js');
 
 exports.rc = {
     'shuffleToRulesets': function(test) {
         var
-            exp = c.footprint({rulesets: {
+            exp = {rulesets: {
                 "a/b/c": {
                     "files": ["a/b/c/1.css", "a/b/c/d/1.css", "a/b/c/d/2.css"],
                     "rules": {}
@@ -16,7 +15,7 @@ exports.rc = {
                     "files": ["a/1.css", "a/2.css", "a/b/1.css"],
                     "rules": {}
                 }
-            }, "files": []}),
+            }, "files": []},
             rcs = [
                 {
                     base: 'a',
@@ -37,10 +36,10 @@ exports.rc = {
                 'a/b/c/d/1.css',
                 'a/b/c/d/2.css'
             ],
-            res = c.footprint('shuffleToRulesets', rcs, files);
+            res = h.shuffleToRulesets(rcs, files);
 
         test.expect(1);
-        test.equal(exp, res);
+        test.deepEqual(exp, res);
         test.done();
     }
 };

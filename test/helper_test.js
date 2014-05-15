@@ -1,30 +1,29 @@
 'use strict';
 
 var
-    h = require('../lib/helper.js'),
-    c = require('./common')(h);
+    h = require('../lib/helper.js');
 
 exports.helper = {
     'parseCli': function(test) {
         var
-            exp1 = '{"options":{"a":["b","c","d"],"e":["f"]},"targets":["g","h"]}',
-            res1 = c.footprint('parseCli', ['--a=b,c,d', '--e=f', 'g', 'h']),
-            exp2 = '{"options":{},"targets":["g\\\\"]}',
-            res2 = c.footprint('parseCli', ['g\\']);
+            exp1 = {"options":{"a":["b","c","d"],"e":["f"]},"targets":["g","h"]},
+            res1 = h.parseCli(['--a=b,c,d', '--e=f', 'g', 'h']),
+            exp2 = {"options":{},"targets":["g\\"]},
+            res2 = h.parseCli(['g\\']);
 
         test.expect(2);
-        test.equal(exp1, res1);
-        test.equal(exp2, res2);
+        test.deepEqual(exp1, res1);
+        test.deepEqual(exp2, res2);
         test.done();
     },
 
     'parseRc': function(test) {
         var
-            res0 = c.footprint('parseRc', '{"a":["b"/*a*/,"c","d"], "e":["f"]}//b'),
-            res1 = c.footprint('parseRc', '--a=b,c,d --e=f');
+            res0 = h.parseRc('{"a":["b"/*a*/,"c","d"], "e":["f"]}//b'),
+            res1 = h.parseRc('--a=b,c,d --e=f');
 
         test.expect(1);
-        test.equal(res0, res1);
+        test.deepEqual(res0, res1);
         test.done();
     },
 
@@ -42,32 +41,32 @@ exports.helper = {
                 'exclude-list': 1,
                 'list-rules': 1
             },
-            exp1 = 'null',
-            res1 = c.footprint('filterUnknown', fulllist),
+            exp1 = null,
+            res1 = h.filterUnknown(fulllist),
 
-            exp2 = '["help","version","format","quiet","exclude-list","list-rules"]',
-            res2 = c.footprint('filterUnknown', fulllist, 'main'),
+            exp2 = ["help","version","format","quiet","exclude-list","list-rules"],
+            res2 = h.filterUnknown(fulllist, 'main'),
 
-            exp3 = '["ignore","warnings","errors"]',
-            res3 = c.footprint('filterUnknown', fulllist, 'cli');
+            exp3 = ["ignore","warnings","errors"],
+            res3 = h.filterUnknown(fulllist, 'cli');
 
         test.expect(3);
         test.equal(exp1, res1, 'all options');
-        test.equal(exp2, res2, 'main options');
-        test.equal(exp3, res3, 'cli options');
+        test.deepEqual(exp2, res2, 'main options');
+        test.deepEqual(exp3, res3, 'cli options');
 
         test.done();
     },
 
     'optionsToExplicitRulesets': function(test) {
         var
-            exp = '{"a":0,"b":0,"c":0,"d":0,"e":1,"f":1,"g":1,"h":2,"i":2,"j":2,"k":2}',
-            res1 = c.footprint('optionsToExplicitRulesets', {
+            exp = {"a":0,"b":0,"c":0,"d":0,"e":1,"f":1,"g":1,"h":2,"i":2,"j":2,"k":2},
+            res1 = h.optionsToExplicitRulesets({
                 "ignore": ["a", "b", "c", "d"],
                 "warnings": ["e", "f", "g"],
                 "errors": ["h", "i", "j", "k"]
             }),
-            res2 = c.footprint('optionsToExplicitRulesets', {
+            res2 = h.optionsToExplicitRulesets({
                 "a": "0",
                 "b": "false",
                 "c": false,
@@ -82,8 +81,8 @@ exports.helper = {
             });
 
         test.expect(2);
-        test.equal(exp, res1);
-        test.equal(exp, res2);
+        test.deepEqual(exp, res1);
+        test.deepEqual(exp, res2);
 
         test.done();
     }
