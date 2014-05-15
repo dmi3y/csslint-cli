@@ -41,5 +41,23 @@ exports.rc = {
         test.expect(1);
         test.deepEqual(exp, res);
         test.done();
+    },
+
+    'sortTheRest': function(test) {
+        var
+            exp = {
+                'c:\\work\\csslint-cli\\test\\assets\\a\\b\\c\\d': { 
+                    files: [ 'c:\\work\\csslint-cli\\test\\assets\\a\\b\\c\\d\\d.css' ],
+                    rules: {
+                        warnings: [ 'ids', 'zero-units' ],
+                        errors: [ 'include' ]
+                    }
+                }
+            },
+            res = h.sortTheRest(['test/assets/a/b/c/d/d.css']);
+
+        test.expect(1);
+        test.deepEqual(exp, res);
+        test.done();  
     }
 };
