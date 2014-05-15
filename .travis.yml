@@ -9,6 +9,7 @@ env:
 
 before_script:
   - npm install -g grunt-cli istanbul coveralls codeclimate-test-reporter
+  - chmod +x ./script/coverage.sh
 
 script:
   - grunt test
