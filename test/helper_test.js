@@ -12,8 +12,8 @@ exports.helper = {
             res2 = h.parseCli(['g\\']);
 
         test.expect(2);
-        test.deepEqual(exp1, res1);
-        test.deepEqual(exp2, res2);
+        test.deepEqual(res1, exp1);
+        test.deepEqual(res2, exp2);
         test.done();
     },
 
@@ -23,7 +23,7 @@ exports.helper = {
             res1 = h.parseRc('--a=b,c,d --e=f');
 
         test.expect(1);
-        test.deepEqual(res0, res1);
+        test.deepEqual(res1, res0);
         test.done();
     },
 
@@ -51,9 +51,51 @@ exports.helper = {
             res3 = h.filterUnknown(fulllist, 'cli');
 
         test.expect(3);
-        test.equal(exp1, res1, 'all options');
-        test.deepEqual(exp2, res2, 'main options');
-        test.deepEqual(exp3, res3, 'cli options');
+        test.equal(res1, exp1);
+        test.deepEqual(res2, exp2);
+        test.deepEqual(res3, exp3);
+
+        test.done();
+    },
+
+    'filterKnown': function(test) {
+        var
+            fulllist = {
+                ignore: 1,
+                warnings: 1,
+                errors: 1,
+
+                help: 1,
+                version: 1,
+                format: 1,
+                quiet: 1,
+                'exclude-list': 1,
+                'list-rules': 1
+            },
+            exp1 = fulllist,
+            res1 = h.filterKnown(fulllist),
+
+            exp2 = {
+                ignore: 1,
+                warnings: 1,
+                errors: 1
+            },
+            res2 = h.filterKnown(fulllist, 'main'),
+
+            exp3 = {                
+                help: 1,
+                version: 1,
+                format: 1,
+                quiet: 1,
+                'exclude-list': 1,
+                'list-rules': 1
+            },
+            res3 = h.filterKnown(fulllist, 'cli');
+
+        test.expect(3);
+        test.deepEqual(res1, exp1);
+        test.deepEqual(res2, exp2);
+        test.deepEqual(res3, exp3);
 
         test.done();
     },
@@ -81,8 +123,8 @@ exports.helper = {
             });
 
         test.expect(2);
-        test.deepEqual(exp, res1);
-        test.deepEqual(exp, res2);
+        test.deepEqual(res1, exp);
+        test.deepEqual(res2, exp);
 
         test.done();
     }

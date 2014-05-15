@@ -11,6 +11,7 @@
 var
     optionsHelper = require('../lib/helper'),
     rc = require('../lib/rc'),
+    v = require('../lib/validators'),
     fu = require('nfsu'),
     u = require('../lib/utils'),
     legacy = require('../lib/legacy'),
@@ -56,7 +57,6 @@ function readySteadyGo (rulesets) {
         len,
         base,
         i,
-        result,
         block,
         files,
         options,
@@ -82,17 +82,7 @@ function readySteadyGo (rulesets) {
                 optionsCli.file = files[i].replace(process.cwd(), '');
                 optionsCli.fullPath = files[i];
 
-                if ( input ) {
-                    result = csslint.verify(input, u.clone(options));
-                } else {
-                    optionsCli.isEmpty = true;
-                }
-
-                legacy.processFile(
-                    result,
-                    csslint.getFormatter(optionsCli.format || "text"),
-                    optionsCli
-                );
+                legacy.report(input, csslint, options, optionsCli);
             }
 
         }
@@ -113,7 +103,7 @@ function init(args) {
 
     parsedCliObj = optionsHelper.parseCli(args);
 
-    optionsCli = rc.validateCli(parsedCliObj.options);
+    optionsCli = v.validateCli(parsedCliObj.options);
     targets = parsedCliObj.targets;
     parsedCliObj = null;
 
@@ -122,7 +112,7 @@ function init(args) {
     excl = optionsCli['exclude-list'] || [];
     workset = fu.lookdownFilesByExts(targets, ['.csslintrc', '.css'], {excl: excl});
 
-    rcfiles = rc.validateRcs(workset['.csslintrc']);
+    rcfiles = v.validateRcs(workset['.csslintrc']);
     cssfiles = workset['.css']; // pre validate css?
     workset = null;
 
