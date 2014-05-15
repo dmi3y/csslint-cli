@@ -10,6 +10,6 @@ script:
   - grunt test
 
 after_script:
-  - ./script/coverage.sh
+  - exec < ./script/coverage.sh
   - codeclimate < ./coverage/lcov.info
   - cat ./coverage/lcov.info | coveralls
