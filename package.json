@@ -36,10 +36,6 @@
     "grunt-contrib-copy": "~0.5.0",
     "nfsu": "0.0.1"
   },
-  "scripts": {
-    "build": "grunt",
-    "test": "grunt test"
-  },
   "dependencies": {
     "csslint": "~0.10.0",
     "strip-json-comments": "~0.1.2",
