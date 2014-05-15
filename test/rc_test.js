@@ -1,7 +1,8 @@
 'use strict';
 
 var
-    h = require('../lib/rc.js');
+    h = require('../lib/rc.js'),
+    fu = require('nfsu');
 
 exports.rc = {
     'shuffleToRulesets': function(test) {
@@ -45,16 +46,18 @@ exports.rc = {
 
     'sortTheRest': function(test) {
         var
-            exp = {
-                'c:\\work\\csslint-cli\\test\\assets\\a\\b\\c\\d': { 
-                    files: [ 'c:\\work\\csslint-cli\\test\\assets\\a\\b\\c\\d\\d.css' ],
-                    rules: {
-                        warnings: [ 'ids', 'zero-units' ],
-                        errors: [ 'include' ]
-                    }
-                }
-            },
+            expkey = fu.p.resolve('test/assets/a/b/c/d'),
+            expval1 = fu.p.resolve('test/assets/a/b/c/d/d.css'),
+            exp = {},
             res = h.sortTheRest(['test/assets/a/b/c/d/d.css']);
+
+        exp[expkey] = { 
+            files: [ expval1 ],
+            rules: {
+                warnings: [ 'ids', 'zero-units' ],
+                errors: [ 'include' ]
+            }
+        };
 
         test.expect(1);
         test.deepEqual(exp, res);
