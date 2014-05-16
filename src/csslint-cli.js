@@ -20,7 +20,7 @@ var
 
     csslintRules,
     optionsCli,
-    optionsDefault = {};
+    optionsDefault;
 
 function checkCli(optionsCli, targets) {
 
@@ -43,6 +43,7 @@ function checkCli(optionsCli, targets) {
 function setDefaultOptions(threshold) {
 
     var
+        out = {},
         defaultThreshold = typeof threshold !== 'undefined'? optionsHelper.optionsToExplicitRulesets({t:threshold}).t: 1;
 
     if ( defaultThreshold ) {
@@ -50,8 +51,10 @@ function setDefaultOptions(threshold) {
         csslintRules = csslint.getRules();
         u.transform(csslintRules, function(res, it){
             res[it.id] = defaultThreshold;
-        }, optionsDefault);
+        }, out);
     }
+
+    return out;
 }
 
 function readySteadyGo (rulesets) {
@@ -63,7 +66,7 @@ function readySteadyGo (rulesets) {
         files,
         options,
         input,
-        optionsFromCli = optionsHelper.filterKnown(optionsCli, 'main');
+        optionsFromCli = optionsHelper.cherryPick(optionsCli, 'main');
 
     for (base in rulesets) {
         if ( rulesets.hasOwnProperty(base) ) {
@@ -101,29 +104,46 @@ function init(args) {
         rulesets = {},
         shuffledObj,
         rcfiles,
-        cssfiles;
+        cssfiles,
+        scope,
+        directOptionsFile;
 
     parsedCliObj = optionsHelper.parseCli(args);
 
     optionsCli = v.validateCli(parsedCliObj.options);
     targets = parsedCliObj.targets;
-    parsedCliObj = null;
 
     checkCli(optionsCli, targets);
 
+    directOptionsFile = optionsCli.config;
+
+    scope = ['.css'];
+    if ( !directOptionsFile ) {
+        scope.push('.csslintrc');
+    }
+
     excl = optionsCli['exclude-list'] || [];
-    workset = fu.lookdownFilesByExts(targets, ['.csslintrc', '.css'], {excl: excl});
+    workset = fu.lookdownFilesByExts(targets, scope, {excl: excl});
 
-    rcfiles = v.validateRcs(workset['.csslintrc']);
     cssfiles = workset['.css']; // pre validate css?
-    workset = null;
+    
+    if ( directOptionsFile ) {
 
-    shuffledObj = rc.shuffleToRulesets(rcfiles, cssfiles);
+        rulesets[process.cwd()] = {
+            files: cssfiles,
+            rules: v.validateRc(directOptionsFile)
+        };
 
-    rulesets = u.merge(shuffledObj.rulesets, rc.sortTheRest(shuffledObj.files, '.csslintrc'));
+    } else {
+
+        rcfiles = v.validateRcs(workset['.csslintrc']);
+        shuffledObj = rc.shuffleToRulesets(rcfiles, cssfiles);
+        rulesets = shuffledObj.files? u.merge(shuffledObj.rulesets, rc.sortTheRest(shuffledObj.files, '.csslintrc')): shuffledObj.rulesets;
+    }
+
 
     
-    setDefaultOptions(optionsCli.threshold);
+    optionsDefault = setDefaultOptions(optionsCli.threshold);
 
 
     readySteadyGo(rulesets);

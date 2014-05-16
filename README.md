@@ -11,7 +11,8 @@
 - [ ] Custom reporters hook, plus default one instead of native text formatter.
 - [x] Look up the `.csslintrc` file from cwd, and sort of lookdown too.
 - [x] Pass multiply targets via cli.
-- [ ] Pass path to arbitrary `.csslintrc` configs directly through cli.
+- [x] Pass path to arbitrary `.csslintrc` configs directly through cli `config` parameter.
+- [x] Switch the default rules level via `threshold` parameter.
 - [x] Native json `.csslintrc` with [comments](https://github.com/sindresorhus/strip-json-comments).
 - [ ] JSHint flavored `.csslintrc` format.
 - [x] Plug in more user friendly [UI goodies](https://github.com/sindresorhus/chalk).

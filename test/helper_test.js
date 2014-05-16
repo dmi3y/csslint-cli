@@ -60,7 +60,7 @@ exports.helper = {
         test.done();
     },
 
-    'filterKnown': function(test) {
+    'cherryPick': function(test) {
         var
             fulllist = {
                 ignore: 1,
@@ -75,14 +75,14 @@ exports.helper = {
                 'list-rules': 1
             },
             exp1 = fulllist,
-            res1 = h.filterKnown(fulllist),
+            res1 = h.cherryPick(fulllist),
 
             exp2 = {
                 ignore: 1,
                 warnings: 1,
                 errors: 1
             },
-            res2 = h.filterKnown(fulllist, 'main'),
+            res2 = h.cherryPick(fulllist, 'main'),
 
             exp3 = {                
                 help: 1,
@@ -92,7 +92,7 @@ exports.helper = {
                 'exclude-list': 1,
                 'list-rules': 1
             },
-            res3 = h.filterKnown(fulllist, 'cli');
+            res3 = h.cherryPick(fulllist, 'cli');
 
         test.expect(3);
         test.deepEqual(res1, exp1);

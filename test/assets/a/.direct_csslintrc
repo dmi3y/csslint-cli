@@ -1,0 +1,6 @@
+{
+    "ignore": [
+        "ids", // skip ids
+        "zero-units" /* and z0 units */
+    ]
+}
