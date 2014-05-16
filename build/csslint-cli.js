@@ -20,8 +20,7 @@ var
 
     csslintRules,
     optionsCli,
-    optionsDefault = {},
-    defaultThreshold = 1; // manifest.main.warnings.default
+    optionsDefault = {};
 
 function checkCli(optionsCli, targets) {
 
@@ -41,7 +40,10 @@ function checkCli(optionsCli, targets) {
     }
 }
 
-function setDefaultOptions() {
+function setDefaultOptions(threshold) {
+
+    var
+        defaultThreshold = typeof threshold !== 'undefined'? optionsHelper.optionsToExplicitRulesets({t:threshold}).t: 1;
 
     if ( defaultThreshold ) {
 
@@ -118,9 +120,10 @@ function init(args) {
 
     shuffledObj = rc.shuffleToRulesets(rcfiles, cssfiles);
 
-    rulesets = u.merge(shuffledObj.rulesets, rc.sortTheRest(shuffledObj.files));
+    rulesets = u.merge(shuffledObj.rulesets, rc.sortTheRest(shuffledObj.files, '.csslintrc'));
 
-    setDefaultOptions();
+    
+    setDefaultOptions(optionsCli.threshold);
 
 
     readySteadyGo(rulesets);

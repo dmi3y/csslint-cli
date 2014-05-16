@@ -49,13 +49,12 @@ exports.rc = {
             expkey = fu.p.resolve('test/assets/a/b/c/d'),
             expval1 = fu.p.resolve('test/assets/a/b/c/d/d.css'),
             exp = {},
-            res = h.sortTheRest(['test/assets/a/b/c/d/d.css']);
+            res = h.sortTheRest(['test/assets/a/b/c/d/d.css'], '.csslintrc');
 
         exp[expkey] = { 
             files: [ expval1 ],
             rules: {
-                warnings: [ 'ids', 'zero-units' ],
-                errors: [ 'include' ]
+                errors: ['include']
             }
         };
 

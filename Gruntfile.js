@@ -14,14 +14,18 @@ module.exports = function (grunt) {
         jshintrc: '.jshintrc',
         reporter: require('jshint-stylish')
       },
-      gruntfile: {
-        src: 'Gruntfile.js'
+      dev: {
+        src: [
+            'Gruntfile.js',
+            'package.json'
+        ]
       },
-      lib: {
-        src: ['lib/**/*.js']
-      },
-      src: {
-        src: ['src/**/*.js']
+      app: {
+        src: [
+            'lib/**/*.js',
+            'lib/manifest.json',
+            'src/**/*.js'
+        ]
       },
       test: {
         src: ['test/**/*.js']

@@ -6,7 +6,7 @@ var
 exports.helper = {
     'parseCli': function(test) {
         var
-            exp1 = {"options":{"a":["b","c","d"],"e":["f"]},"targets":["g","h"]},
+            exp1 = {"options":{"a":"b,c,d","e":"f"},"targets":["g","h"]},
             res1 = h.parseCli(['--a=b,c,d', '--e=f', 'g', 'h']),
             exp2 = {"options":{},"targets":["g\\"]},
             res2 = h.parseCli(['g\\']);
@@ -19,11 +19,13 @@ exports.helper = {
 
     'parseRc': function(test) {
         var
+            exp = {"a":["b","c","d"],"e":["f"]},
             res0 = h.parseRc('{"a":["b"/*a*/,"c","d"], "e":["f"]}//b'),
             res1 = h.parseRc('--a=b,c,d --e=f');
 
-        test.expect(1);
-        test.deepEqual(res1, res0);
+        test.expect(2);
+        test.deepEqual(res0, exp);
+        test.deepEqual(res1, exp);
         test.done();
     },
 
