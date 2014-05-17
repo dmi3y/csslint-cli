@@ -126,7 +126,7 @@ function init(args) {
         scope.push('.csslintrc');
     }
 
-    excl = (optionsCli['exclude-list'] || []).split(',');
+    excl = (optionsCli['exclude-list'] || '').split(',');
     workset = fu.lookdownFilesByExts(targets, scope, {excl: excl});
 
     cssfiles = workset['.css']; // pre validate css?

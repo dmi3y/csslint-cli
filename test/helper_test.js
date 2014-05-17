@@ -110,14 +110,16 @@ exports.helper = {
         var
             conf = {a:0,b:1,c:2},
             cli = {ignore:'x,i',warnings:'y,j',errors:'z,k'},
+
             exp1 = {x:0,i:0,y:1,j:1,z:2,k:2},
-            res1 = h.mixup(u.clone(conf), u.clone(cli)),
+            res1 = h.mixup(u.clone(conf), u.clone(cli), false),
+
             exp2 = {a:0,x:0,i:0,b:1,y:1,j:1,c:2,z:2,k:2},
-            res2 = h.mixup(conf, cli, true);
+            res2 = h.mixup(u.clone(conf), u.clone(cli), true);
 
         test.expect(2);
-        test.deepEqual(res1, exp1);
-        test.deepEqual(res2, exp2);
+        test.deepEqual(res1, exp1, 'not straight');
+        test.deepEqual(res2, exp2, 'straight');
         test.done();
     },
     'optionsToExplicitRulesets': function(test) {

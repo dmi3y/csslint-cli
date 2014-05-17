@@ -7,14 +7,14 @@
 
 - [x] Replicate current csslint cli functionality for node in modular way for easier tweaks.
 - [x] Transparancy of how different rulesets options affects final output.
-- [ ] Rethink how options overriding works, sort of `--melt` parameter for cli.
+- [x] `--melt` parameter to merge cli options into rcs.
 - [ ] Custom reporters hook, plus default one instead of native text formatter.
 - [x] Look up the `.csslintrc` file from cwd, and sort of lookdown too.
 - [x] Pass multiply targets via cli.
 - [x] Pass path to arbitrary `.csslintrc` configs directly through cli `config` parameter.
 - [x] Switch the default rules level via `threshold` parameter.
 - [x] Native json `.csslintrc` with [comments](https://github.com/sindresorhus/strip-json-comments).
-- [ ] Block style (JSHint flavored) `.csslintrc` format support.
+- [x] Block style (JSHint flavored) `.csslintrc` format support.
 - [x] Plug in more user friendly [UI goodies](https://github.com/sindresorhus/chalk).
 - [x] Relaxed CLI [parameters](https://github.com/substack/minimist).
 
