@@ -1,0 +1,4 @@
+{
+    "ids":0, // skip ids
+    "zero-units":false /* and z0 units */
+}

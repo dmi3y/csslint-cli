@@ -23,6 +23,14 @@ var
     optionsDefault;
 
 function checkCli(optionsCli, targets) {
+    var
+        unknownOptions;
+
+    unknownOptions = v.validateCli(optionsCli);
+    if( unknownOptions ) {
+        printer.unknown(unknownOptions);
+        process.exit(1);
+    }
 
     if ( optionsCli.help ) {
         printer.help();
@@ -74,8 +82,7 @@ function readySteadyGo (rulesets) {
 
             files = block.files;
             options = block.rules;
-            u.merge(options, optionsFromCli);
-            options = optionsHelper.optionsToExplicitRulesets(options);
+            options = optionsHelper.mixup(options, optionsFromCli, optionsCli.melt);
 
             options = u.merge(optionsDefault, options);
 
@@ -96,37 +103,34 @@ function readySteadyGo (rulesets) {
 
 function init(args) {
     var
-
         parsedCliObj,
         targets,
         workset,
         excl,
         rulesets = {},
         shuffledObj,
-        rcfiles,
+        rcrules,
         cssfiles,
         scope,
         directOptionsFile;
 
     parsedCliObj = optionsHelper.parseCli(args);
-
-    optionsCli = v.validateCli(parsedCliObj.options);
+    optionsCli = parsedCliObj.options;
     targets = parsedCliObj.targets;
 
     checkCli(optionsCli, targets);
 
-    directOptionsFile = optionsCli.config;
-
     scope = ['.css'];
+    directOptionsFile = optionsCli.config;
     if ( !directOptionsFile ) {
         scope.push('.csslintrc');
     }
 
-    excl = optionsCli['exclude-list'] || [];
+    excl = (optionsCli['exclude-list'] || []).split(',');
     workset = fu.lookdownFilesByExts(targets, scope, {excl: excl});
 
     cssfiles = workset['.css']; // pre validate css?
-    
+
     if ( directOptionsFile ) {
 
         rulesets[process.cwd()] = {
@@ -136,8 +140,8 @@ function init(args) {
 
     } else {
 
-        rcfiles = v.validateRcs(workset['.csslintrc']);
-        shuffledObj = rc.shuffleToRulesets(rcfiles, cssfiles);
+        rcrules = v.validateRcs(workset['.csslintrc']);
+        shuffledObj = rc.shuffleToRulesets(rcrules, cssfiles);
         rulesets = shuffledObj.files? u.merge(shuffledObj.rulesets, rc.sortTheRest(shuffledObj.files, '.csslintrc')): shuffledObj.rulesets;
     }
 
