@@ -10,22 +10,22 @@ exports.rc = {
             exp = {rulesets: {
                 "a/b/c": {
                     "files": ["a/b/c/1.css", "a/b/c/d/1.css", "a/b/c/d/2.css"],
-                    "rules": {}
+                    "rules": {include:2, ids:1, shortland:0, 'zero-units':0}
                 },
                 "a": {
                     "files": ["a/1.css", "a/2.css", "a/b/1.css"],
-                    "rules": {}
+                    "rules": {include:2, ids:1, shortland:0, 'zero-units':0}
                 }
             }, "files": []},
             rcs = [
                 {
                     base: 'a',
-                    rules: {},
+                    rules: {include:2, ids:1, shortland:0, 'zero-units':0},
                     ord: 1
                 },
                 {
                     base: 'a/b/c',
-                    rules: {},
+                    rules: {include:2, ids:1, shortland:0, 'zero-units':0},
                     ord: 0
                 }
             ],
@@ -48,18 +48,26 @@ exports.rc = {
         var
             expkey = fu.p.resolve('test/assets/a/b/c/d'),
             expval1 = fu.p.resolve('test/assets/a/b/c/d/d.css'),
-            exp = {},
-            res = h.sortTheRest(['test/assets/a/b/c/d/d.css'], '.csslintrc');
+            expval2 = fu.p.resolve('test/assets/a/b/c/d/x.css'),
+            exp1 = {},
+            exp2 = {},
+            res1 = h.sortTheRest(['test/assets/a/b/c/d/d.css'], '.csslintrc'),
+            res2 = h.sortTheRest(['test/assets/a/b/c/d/x.css'], '.this-file-is-not-part-of-fs_@#$_forsure');
 
-        exp[expkey] = { 
+        exp1[expkey] = {
             files: [ expval1 ],
             rules: {
-                errors: ['include']
+                include: 2
             }
         };
+        exp2[expkey] = {
+            files: [ expval2 ],
+            rules: {}
+        };
 
-        test.expect(1);
-        test.deepEqual(exp, res);
-        test.done();  
+        test.expect(2);
+        test.deepEqual(exp1, res1);
+        test.deepEqual(exp2, res2);
+        test.done();
     }
 };
