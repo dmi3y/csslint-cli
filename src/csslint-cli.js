@@ -141,10 +141,7 @@ function init(args) {
         rulesets = shuffledObj.files? u.merge(shuffledObj.rulesets, rc.sortTheRest(shuffledObj.files, '.csslintrc')): shuffledObj.rulesets;
     }
 
-
-    
     optionsDefault = setDefaultOptions(optionsCli.threshold);
-
 
     readySteadyGo(rulesets);
 

@@ -14,7 +14,7 @@
 - [x] Pass path to arbitrary `.csslintrc` configs directly through cli `config` parameter.
 - [x] Switch the default rules level via `threshold` parameter.
 - [x] Native json `.csslintrc` with [comments](https://github.com/sindresorhus/strip-json-comments).
-- [ ] JSHint flavored `.csslintrc` format.
+- [ ] Block style (JSHint flavored) `.csslintrc` format support.
 - [x] Plug in more user friendly [UI goodies](https://github.com/sindresorhus/chalk).
 - [x] Relaxed CLI [parameters](https://github.com/substack/minimist).
 
