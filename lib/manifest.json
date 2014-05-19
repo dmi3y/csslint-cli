@@ -23,11 +23,12 @@
         "help"        : { "format" : "",                       "description" : "Displays this information."},
         "version"     : { "format" : "",                       "description" : "Outputs the current version number."},
         "list-rules"  : { "format" : "",                       "description" : "Outputs all of the rules available."},
-        "format"      : { "format" : "<format>",               "description" : "Indicate which format to use for output."},
+        "format"      : { "format" : "<format>",               "description" : "Indicate which format to use for output, only for legacy reporter."},
         "quiet"       : { "format" : "",                       "description" : "Only output when errors are present."},
         "exclude-list": { "format" : "<file|dir[,file|dir]+>", "description" : "Indicate which files/directories to exclude from being linted."},
         "config"      : { "format" : "<file>",                 "description" : "Reads csslint options from specified file."},
         "melt"        : { "format" : "",                       "description" : "Detailed cli options merging into rcs."},
-        "threshold"   : { "format" : "<mixed>",                "description" : "Explicit sting or number represintation to default rule lint level,\n if nothing set `warnings` used."}
+        "reporter"    : { "format" : "<string|function>",      "description" : "Formatter function, legacy for native reporter with --format support."},
+        "threshold"   : { "format" : "<mixed>",                "description" : "Explicit sting or number represintation to default rule lint level, if nothing set `warnings` used."}
     }
 }

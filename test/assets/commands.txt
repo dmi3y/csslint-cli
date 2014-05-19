@@ -1,0 +1,10 @@
+csslint-cli --help
+csslint-cli --list-rules
+csslint-cli --version
+csslint-cli test/assets/a
+csslint-cli test/assets/a --quiet
+csslint-cli test/assets/a --warnings=ids
+csslint-cli test/assets/a --warnings=ids --melt
+csslint-cli test/assets/a --config=test/assets/.csslintblock
+csslint-cli test/assets/a --config=test/assets/.csslintjson
+csslint-cli test/assets/a --config=test/assets/.csslintorig

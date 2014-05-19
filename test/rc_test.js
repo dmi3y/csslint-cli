@@ -40,7 +40,7 @@ exports.rc = {
             res = h.shuffleToRulesets(rcs, files);
 
         test.expect(1);
-        test.deepEqual(exp, res);
+        test.deepEqual(res, exp);
         test.done();
     },
 
@@ -57,7 +57,7 @@ exports.rc = {
         exp1[expkey] = {
             files: [ expval1 ],
             rules: {
-                include: 2
+                'zero-units': 1
             }
         };
         exp2[expkey] = {
@@ -66,8 +66,8 @@ exports.rc = {
         };
 
         test.expect(2);
-        test.deepEqual(exp1, res1);
-        test.deepEqual(exp2, res2);
+        test.deepEqual(res1, exp1, 'lookup rc');
+        test.deepEqual(res2, exp2, 'no external rc');
         test.done();
     }
 };
