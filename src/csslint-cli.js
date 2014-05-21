@@ -94,13 +94,13 @@ function report(files, rules) {
 
         if ( !reporter ) {
 
-            _reporter = require('../lib/reporter-console-default');
+            _reporter = require('../reporter/reporter-console-default');
         } else if ( reporter === 'legacy' ) {
 
-            _reporter = require('../lib/reporter-legacy');
+            _reporter = require('../reporter/reporter-legacy');
         } else if ( reporter === 'json' ) {
 
-            _reporter = require('../lib/reporter-json');
+            _reporter = require('../reporter/reporter-json');
         }
 
         out[file.path] = _reporter(result, file, optionsCli);
