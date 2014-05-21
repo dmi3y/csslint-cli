@@ -98,13 +98,9 @@ function report(files, rules) {
         } else if ( reporter === 'legacy' ) {
 
             _reporter = require('../lib/reporter-legacy');
-        } else if ( typeof reporter !== 'function' ) {
+        } else if ( reporter === 'json' ) {
 
-            _reporter = null;
-        } else {
-
-            out[1] = 'unknown reporter';
-            break;
+            _reporter = require('../lib/reporter-json');
         }
 
         out[file.path] = _reporter(result, file, optionsCli);
@@ -131,7 +127,7 @@ function readySteadyGo (rulesets) {
             rules = u.merge(rulesDefault, rules);
 
 
-            return report(files, rules);
+            report(files, rules);
 
         }
     }
