@@ -1,1 +1,1 @@
---warnings=zero-units
+--errors=zero-units

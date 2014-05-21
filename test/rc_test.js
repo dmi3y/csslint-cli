@@ -20,12 +20,12 @@ exports.rc = {
             rcs = [
                 {
                     base: 'a',
-                    rules: {include:2, ids:1, shortland:0, 'zero-units':0},
+                    options: {include:2, ids:1, shortland:0, 'zero-units':0},
                     ord: 1
                 },
                 {
                     base: 'a/b/c',
-                    rules: {include:2, ids:1, shortland:0, 'zero-units':0},
+                    options: {include:2, ids:1, shortland:0, 'zero-units':0},
                     ord: 0
                 }
             ],
@@ -57,7 +57,7 @@ exports.rc = {
         exp1[expkey] = {
             files: [ expval1 ],
             rules: {
-                'zero-units': 1
+                'zero-units': 2
             }
         };
         exp2[expkey] = {
