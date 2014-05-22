@@ -9,21 +9,22 @@
 
 - Additional parameters:
     - `--squash` - makes warnings|errors|ignores provided via CLI be gracefully merged into `.csslintrc' rules.
+    - `--config` - path to arbitrary `.csslintrc` file, it will block looking up and checking targets directories for rc file, that's most likely usecase for this option.
     - `--threshold=0|1|2|ignore|warnings|errors` - setup report level for rules which are not explicitly set, default is 1 (warnings).
 
 - Multiply targets pickup `csslint-cli --errors=ids styles/a.css styles/b.css styles/c.css legacy/styles/`. 
 
 - `.csslintrc` multiformat support, with comments in json.
 
-    Original format:
+    Original CLI inspired format:
     ```
         --errors=ids,zero-units
         --warnings=shorthand,text-indent
         --ignore=star-property-hack,floats
     ```
 
-    Reads the same as:
-    ```json
+    Reads the same as (json represintation):
+    ```js
         {
             "errors": [
                 "ids",
@@ -40,8 +41,8 @@
         }
     ```
 
-    And same as:
-    ```json
+    And same as (block style rules):
+    ```js
         {
             "ids": 2, // errors
             "zero-units": true, // errors
@@ -57,13 +58,8 @@
 
         csslintCLI([/*options*/]);
     ```
-- Look up the `.csslintrc` file from cwd, and sort of lookdown too.
-- Pass path to arbitrary `.csslintrc` configs directly through cli `config` parameter.
-- Switch the default rules level via `threshold` parameter.
-- Native json `.csslintrc` with [comments](https://github.com/sindresorhus/strip-json-comments).
-- Block style (JSHint flavored) `.csslintrc` format support.
-- Plug in more user friendly [UI goodies](https://github.com/sindresorhus/chalk).
-- Relaxed CLI [parameters](https://github.com/substack/minimist).
+- Looks up directory (till the top or user home) for available `.csslintrc` files.
+- Checks every target directory for `.csslintrc`.
 
 
 - [x] Replicate current csslint cli functionality for node in modular way for easier tweaks.
