@@ -26,9 +26,6 @@ module.exports = function(result, file, options) {
         return a.line >= b.line && a.col >= b.col;
     });
 
-
-    // out.push('');
-
     for(i = 0; i < msgLen; i += 1) {
 
         msg = result.messages[i];
@@ -38,7 +35,6 @@ module.exports = function(result, file, options) {
             out.push('|   ' + coord + ck.gray(' . . . ') + ck.bold.magenta(msg.evidence.trim()));
         }
         out.push('|   ' + pr[msg.type](msg.message) + ck.gray('(' + msg.rule.id + ')'));
-        // out.push('|    |');
         out.push('|');
         type[msg.type] = '';
 
@@ -50,13 +46,13 @@ module.exports = function(result, file, options) {
 
         out.unshift('|');
         out.unshift('+-' + ck[color].bold(file.path + ': ') +  msgLen + ' issue(s):');
+        out.unshift('');
         out.push('+-' + ck[color].bold(file.path));
-        out.push('');
 
     } else if ( file.isEmpty ) {
-        out.push(pr.warning(file.path + ' - is empty.\n'));
+        out.push('\n' + pr.warning(file.path + ' - is empty.'));
     } else if ( !options.quiet ) {
-        out.push(pr.ok(file.path) + '\n');
+        out.push('\n' + pr.ok(file.path));
     }
 
     if ( out.length ) {

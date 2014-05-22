@@ -18,26 +18,25 @@ var
     csslint = require('csslint').CSSLint,
 
     csslintRules,
-    optionsCli,
-    rulesDefault;
+    optionsCli;
 
-function checkCli(optionsCli, targets) {
+function checkParameters(options, targets) {
     var
         unknownOptions;
 
-    unknownOptions = v.validateCli(optionsCli);
+    unknownOptions = v.validateCli(options);
     if( unknownOptions ) {
         printer.unknown(unknownOptions);
         process.exit(1);
     }
 
-    if ( optionsCli.help ) {
+    if ( options.help ) {
         printer.help();
         process.exit();
-    } else if ( optionsCli.version ) {
+    } else if ( options.version ) {
         printer.version(csslint.version, '<%- @VERSION %>');
         process.exit();
-    } else if ( optionsCli['list-rules'] ) {
+    } else if ( options['list-rules'] ) {
         csslintRules = csslint.getRules();
         printer.rules( csslintRules );
         process.exit();
@@ -64,7 +63,25 @@ function setDefaultOptions(threshold) {
     return out;
 }
 
-function report(files, rules) {
+function getReporter( reporter ) {
+
+        if ( !reporter ) {
+
+            reporter = require('../reporter/reporter-console-default');
+        } else if ( typeof reporter === 'function' ) {
+
+            reporter = reporter;
+        } else if ( typeof reporter === 'string' ) {
+
+            reporter = require(fu.p.resolve(reporter));
+        } else {
+            reporter = null;
+        }
+
+    return reporter;
+}
+
+function fileReport(files, rules) {
     var
         len,
         i,
@@ -72,8 +89,7 @@ function report(files, rules) {
         result,
         isEmpty,
         file = {},
-        reporter = optionsCli.reporter,
-        _reporter,
+        reporter = getReporter(optionsCli.reporter),
         out = {};
 
     len = files.length;
@@ -81,6 +97,7 @@ function report(files, rules) {
     for (i = 0; i < len; i += 1) {
 
         input = fu.readFileStr(files[i]);
+
         if ( input ) {
             result = csslint.verify(input, u.clone(rules));
             isEmpty = false;
@@ -92,29 +109,20 @@ function report(files, rules) {
         file.fullPath = files[i];
         file.isEmpty = isEmpty;
 
-        if ( !reporter ) {
 
-            _reporter = require('../reporter/reporter-console-default');
-        } else if ( reporter === 'legacy' ) {
-
-            _reporter = require('../reporter/reporter-legacy');
-        } else if ( reporter === 'json' ) {
-
-            _reporter = require('../reporter/reporter-json');
-        }
-
-        out[file.path] = _reporter(result, file, optionsCli);
+        out[file.path] = reporter(result, file, optionsCli);
     }
     return out;
 }
 
-function readySteadyGo (rulesets) {
+function startReports(rulesets) {
     var
         base,
         block,
         files,
         rules,
-        rulesCli = optionsHelper.cherryPick(optionsCli, 'main');
+        rulesCli = optionsHelper.cherryPick(optionsCli, 'main'),
+        rulesDefault = setDefaultOptions(optionsCli.threshold);
 
     for (base in rulesets) {
         if ( rulesets.hasOwnProperty(base) ) {
@@ -123,34 +131,25 @@ function readySteadyGo (rulesets) {
             files = block.files;
 
             rules = block.rules;
-            rules = optionsHelper.mixup(rules, rulesCli, optionsCli.melt);
+            rules = optionsHelper.mixup(rules, rulesCli, optionsCli.squash);
             rules = u.merge(rulesDefault, rules);
 
-
-            report(files, rules);
+            fileReport(files, rules);
 
         }
     }
 }
 
-function init(args) {
+function getRulesets(targets) {
     var
-        parsedCliObj,
-        targets,
+        directOptionsFile,
+        scope,
         workset,
         excl,
         rulesets = {},
         shuffledObj,
         rcrules,
-        cssfiles,
-        scope,
-        directOptionsFile;
-
-    parsedCliObj = optionsHelper.parseCli(args);
-    optionsCli = parsedCliObj.options;
-    targets = parsedCliObj.targets;
-
-    checkCli(optionsCli, targets);
+        cssfiles;
 
     scope = ['.css'];
     directOptionsFile = optionsCli.config;
@@ -177,9 +176,17 @@ function init(args) {
         rulesets = shuffledObj.files? u.merge(shuffledObj.rulesets, rc.sortTheRest(shuffledObj.files, '.csslintrc')): shuffledObj.rulesets;
     }
 
-    rulesDefault = setDefaultOptions(optionsCli.threshold);
+    return rulesets;
+}
+ 
+function init(options, targets) {
 
-    readySteadyGo(rulesets);
+
+    checkParameters(options, targets);
+
+    optionsCli = options;
+
+    startReports(getRulesets(targets));
 
     process.exit();
 }

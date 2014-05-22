@@ -20,12 +20,12 @@ exports.rc = {
             rcs = [
                 {
                     base: 'a',
-                    options: {include:2, ids:1, shortland:0, 'zero-units':0},
+                    rules: {include:2, ids:1, shortland:0, 'zero-units':0},
                     ord: 1
                 },
                 {
                     base: 'a/b/c',
-                    options: {include:2, ids:1, shortland:0, 'zero-units':0},
+                    rules: {include:2, ids:1, shortland:0, 'zero-units':0},
                     ord: 0
                 }
             ],

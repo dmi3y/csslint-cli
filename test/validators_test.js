@@ -46,7 +46,7 @@ exports.validators = {
                 "quiet":1,
                 "exclude-list":1,
                 "config":1,
-                "melt":1,
+                "squash":1,
                 "threshold":1
             },
             res1 = v.validateCli(base),

@@ -7,11 +7,11 @@ var
 exports.helper = {
     'parseCli': function(test) {
         var
-            exp1 = {"options":{"a":"b,c,d","e":"f"},"targets":["g","h"]},
+            exp1 = {"rules":{"a":"b,c,d","e":"f"},"targets":["g","h"]},
             res1 = h.parseCli(['--a=b,c,d', '--e=f', 'g', 'h']),
-            exp3 = {"options":{"a":"b,c,d","e":"f"}, "targets":[]},
+            exp3 = {"rules":{"a":"b,c,d","e":"f"}, "targets":[]},
             res3 = h.parseCli(['--a=b,c,d', '--e=f']),
-            exp2 = {"options":{},"targets":["g\\"]},
+            exp2 = {"rules":{},"targets":["g\\"]},
             res2 = h.parseCli(['g\\']);
 
         test.expect(3);

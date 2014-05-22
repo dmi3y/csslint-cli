@@ -3,12 +3,73 @@
 
 > Alternative CLI for [CSSLint](https://github.com/CSSLint/csslint).
 
-## Early stage tasks to complete:
+## Features:
+
+- Backward compatability with original CLI.
+
+- Additional parameters:
+    - `--squash` - makes warnings|errors|ignores provided via CLI be gracefully merged into `.csslintrc' rules.
+    - `--threshold=0|1|2|ignore|warnings|errors` - setup report level for rules which are not explicitly set, default is 1 (warnings).
+
+- Multiply targets pickup `csslint-cli --errors=ids styles/a.css styles/b.css styles/c.css legacy/styles/`. 
+
+- `.csslintrc` multiformat support, with comments in json.
+
+    Original format:
+    ```
+        --errors=ids,zero-units
+        --warnings=shorthand,text-indent
+        --ignore=star-property-hack,floats
+    ```
+
+    Reads the same as:
+    ```json
+        {
+            "errors": [
+                "ids",
+                "zero-units"
+            ],
+            "warnings": [
+                "shorthand", /* cleanup */
+                "text-indent"
+            ],
+            "ignore": [
+                "star-property-hack", // legacy
+                "floats"
+            ]
+        }
+    ```
+
+    And same as:
+    ```json
+        {
+            "ids": 2, // errors
+            "zero-units": true, // errors
+            "shorthand": 0, /* warnings */
+            "text-indent": '', /* warnings */
+            "star-property-hack": 1, // ignore
+            "floats": false // ignore
+        }
+    ```
+- Programmatic use.
+    ```js
+        var csslintCLI = require('csslint-cli');
+
+        csslintCLI([/*options*/]);
+    ```
+- Look up the `.csslintrc` file from cwd, and sort of lookdown too.
+- Pass path to arbitrary `.csslintrc` configs directly through cli `config` parameter.
+- Switch the default rules level via `threshold` parameter.
+- Native json `.csslintrc` with [comments](https://github.com/sindresorhus/strip-json-comments).
+- Block style (JSHint flavored) `.csslintrc` format support.
+- Plug in more user friendly [UI goodies](https://github.com/sindresorhus/chalk).
+- Relaxed CLI [parameters](https://github.com/substack/minimist).
+
 
 - [x] Replicate current csslint cli functionality for node in modular way for easier tweaks.
 - [x] Transparancy of how different rulesets options affects final output.
-- [x] `--melt` parameter to merge cli options into rcs.
-- [ ] Custom reporters hook, plus default one instead of native text formatter.
+- [x] `--squash` parameter to merge cli options into rcs.
+- [x] Custom reporters hook, plus default one instead of native text formatter.
 - [x] Look up the `.csslintrc` file from cwd, and sort of lookdown too.
 - [x] Pass multiply targets via cli.
 - [x] Pass path to arbitrary `.csslintrc` configs directly through cli `config` parameter.
