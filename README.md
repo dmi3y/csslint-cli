@@ -12,7 +12,7 @@
     - `--config` - path to arbitrary `.csslintrc` file, it will block looking up and checking targets directories for rc file, that's most likely usecase for this option.
     - `--threshold=0|1|2|ignore|warnings|errors` - setup report level for rules which are not explicitly set, default is 1 (warnings).
 
-- Multiply targets pickup `csslint-cli --errors=ids styles/a.css styles/b.css styles/c.css legacy/styles/`. 
+- Multiply targets `csslint-cli --errors=ids styles/a.css styles/b.css styles/c.css legacy/styles/`. 
 
 - `.csslintrc` multiformat support, with comments in json.
 
@@ -23,7 +23,7 @@
         --ignore=star-property-hack,floats
     ```
 
-    Reads the same as (json represintation):
+    Reads the same as its json represintation:
     ```js
         {
             "errors": [
@@ -41,7 +41,7 @@
         }
     ```
 
-    And same as (block style rules):
+    And same as block style rules json:
     ```js
         {
             "ids": 2, // errors
@@ -59,21 +59,22 @@
         csslintCLI([/*options*/]);
     ```
 - Looks up directory (till the top or user home) for available `.csslintrc` files.
-- Checks every target directory for `.csslintrc`.
+- And checks every target directory for `.csslintrc`.
+- Improved visual console feedback.
+- Custom validators hook ups.
 
 
-- [x] Replicate current csslint cli functionality for node in modular way for easier tweaks.
-- [x] Transparancy of how different rulesets options affects final output.
-- [x] `--squash` parameter to merge cli options into rcs.
-- [x] Custom reporters hook, plus default one instead of native text formatter.
-- [x] Look up the `.csslintrc` file from cwd, and sort of lookdown too.
-- [x] Pass multiply targets via cli.
-- [x] Pass path to arbitrary `.csslintrc` configs directly through cli `config` parameter.
-- [x] Switch the default rules level via `threshold` parameter.
-- [x] Native json `.csslintrc` with [comments](https://github.com/sindresorhus/strip-json-comments).
-- [x] Block style (JSHint flavored) `.csslintrc` format support.
-- [x] Plug in more user friendly [UI goodies](https://github.com/sindresorhus/chalk).
-- [x] Relaxed CLI [parameters](https://github.com/substack/minimist).
+
+## Credits
+
+- [CSSLint parser](https://github.com/CSSLint/csslint).
+- [Minimist](https://github.com/substack/minimist) CLI parameters parser.
+- Colorful UI with [chalk](https://github.com/sindresorhus/chalk).
+- JSON [strip comments](https://github.com/sindresorhus/strip-json-comments).
+- [LoDash](https://github.com/lodash/lodash).
+
+## To Do
+- [ ] More verbose messages in case of non existing targets.
 
 ## License
 Copyright (c) 2014 Dmitry Lapshukov. Licensed under the MIT license.
