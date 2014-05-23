@@ -3,6 +3,20 @@
 
 > Alternative CLI for [CSSLint](https://github.com/CSSLint/csslint).
 
+
+## Usage
+
+##### CLI.
+    ```sh
+        csslint-cli [options]* [file|dir [file|dir]]*
+    ```
+##### From scripts.
+    ```js
+        var csslintCLI = require('csslint-cli');
+
+        csslintCLI(options/*array*/, targets/*array*/);
+    ```
+
 ## Features:
 
 - Backward compatability with original CLI.
@@ -52,16 +66,10 @@
             "floats": false // ignore
         }
     ```
-- Programmatic use.
-    ```js
-        var csslintCLI = require('csslint-cli');
-
-        csslintCLI([/*options*/]);
-    ```
-- Looks up directory (till the top or user home) for available `.csslintrc` files.
-- And checks every target directory for `.csslintrc`.
+- Looks up directory (till the top or user home) for first available `.csslintrc` file.
+- And checks every target directory for `.csslintrc` accordingly applying it to all child targets.
 - Improved visual console feedback.
-- Custom validators hook ups.
+- Custom validators hook ups*.
 
 
 
@@ -73,8 +81,9 @@
 - JSON [strip comments](https://github.com/sindresorhus/strip-json-comments).
 - [LoDash](https://github.com/lodash/lodash).
 
-## To Do
+## ToDo
 - [ ] More verbose messages in case of non existing targets.
+- [ ] Collaborate custom validators hook.
 
 ## License
 Copyright (c) 2014 Dmitry Lapshukov. Licensed under the MIT license.

@@ -31,16 +31,20 @@ function checkParameters(options, targets) {
     }
 
     if ( options.help ) {
+        
         printer.help();
         process.exit();
     } else if ( options.version ) {
+
         printer.version(csslint.version, '<%- @VERSION %>');
         process.exit();
     } else if ( options['list-rules'] ) {
+
         csslintRules = csslint.getRules();
         printer.rules( csslintRules );
         process.exit();
     } else if ( !targets.length ) {
+
         printer.noTargets();
         process.exit(1);
     }
