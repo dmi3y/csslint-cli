@@ -8,16 +8,16 @@
 
 ##### CLI.
 
-    ```sh
-        csslint-cli [options]* [file|dir [file|dir]]*
-    ```
+```sh
+    csslint-cli [options]* [file|dir [file|dir]]*
+```
 ##### From scripts.
 
-    ```js
-        var csslintCLI = require('csslint-cli');
+```js
+    var csslintCLI = require('csslint-cli');
 
-        csslintCLI(options/*array*/, targets/*array*/);
-    ```
+    csslintCLI(options/*array*/, targets/*array*/);
+```
 
 ## Features:
 
