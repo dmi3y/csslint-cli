@@ -7,10 +7,12 @@
 ## Usage
 
 ##### CLI.
+
     ```sh
         csslint-cli [options]* [file|dir [file|dir]]*
     ```
 ##### From scripts.
+
     ```js
         var csslintCLI = require('csslint-cli');
 
