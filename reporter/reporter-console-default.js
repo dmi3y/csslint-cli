@@ -9,15 +9,21 @@
 'use strict';
 
 var
+    out = [],
+    lpush = out.push,
+    lunshift = out.unshift,
     pr = require('../lib/printer'),
     ck = require('chalk');
+
+function coord(l, c) {
+
+    return ck.gray('L') + ck.bold.yellow(l) + ck.gray(':C') + ck.bold.yellow(c);
+}
 
 module.exports = function(result, file, options) {
     var
         msgLen = result.messages.length,
         msg,
-        coord,
-        out = [],
         type = {},
         color,
         i;
@@ -31,12 +37,11 @@ module.exports = function(result, file, options) {
         msg = result.messages[i];
         if ( !msg.rollup ) {
 
-            coord = ck.gray('L') + ck.bold.yellow(msg.line) + ck.gray(':C') + ck.bold.yellow(msg.col);
-            out.push('|   ' + coord + ck.gray(' . . . ') + ck.bold.magenta(msg.evidence.trim()));
+            lpush('|   ' + coord(msg.line, msg.col) + ck.gray(' . . . ') + ck.bold.magenta(msg.evidence.trim()));
         }
-        out.push('|   ' + pr[msg.type](msg.message) + ck.gray('(' + msg.rule.id + ')'));
-        out.push('|');
-        type[msg.type] = '';
+        lpush('|   ' + pr[msg.type](msg.message) + ck.gray('(' + msg.rule.id + ')'));
+        lpush('|');
+        type[msg.type] = i;
 
     }
 
@@ -44,15 +49,17 @@ module.exports = function(result, file, options) {
 
         color = type.hasOwnProperty('error')? 'red': 'yellow';
 
-        out.unshift('|');
-        out.unshift('+-' + ck[color].bold(file.path + ': ') +  msgLen + ' issue(s):');
-        out.unshift('');
-        out.push('+-' + ck[color].bold(file.path));
+        lunshift('|');
+        lunshift('+-' + ck[color].bold(file.path + ': ') +  msgLen + ' issue(s):');
+        lunshift('');
+        lpush('+-' + ck[color].bold(file.path));
 
     } else if ( file.isEmpty ) {
-        out.push('\n' + pr.warning(file.path + ' - is empty.'));
+
+        lpush('\n' + pr.warning(file.path + ' - is empty.'));
     } else if ( !options.quiet ) {
-        out.push('\n' + pr.ok(file.path));
+
+        lpush('\n' + pr.ok(file.path));
     }
 
     if ( out.length ) {
