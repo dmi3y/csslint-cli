@@ -30,6 +30,8 @@ function prepareMessages(result) {
         msg,
         i;
 
+    out.length = 0;
+
     msgLen = result.messages.length;
     result.messages.sort(function(a, b){
         return a.line >= b.line && a.col >= b.col;
