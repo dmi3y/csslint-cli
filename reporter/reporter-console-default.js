@@ -9,25 +9,28 @@
 'use strict';
 
 var
-    out = [],
-    lpush = out.push,
-    lunshift = out.unshift,
     pr = require('../lib/printer'),
-    ck = require('chalk');
+    ck = require('chalk'),
+
+    type = {},
+    msgLen,
+
+    out = [],
+    opush = out.push.bind(out),
+    ounshift = out.unshift.bind(out);
+
 
 function coord(l, c) {
 
     return ck.gray('L') + ck.bold.yellow(l) + ck.gray(':C') + ck.bold.yellow(c);
 }
 
-module.exports = function(result, file, options) {
+function prepareMessages(result) {
     var
-        msgLen = result.messages.length,
         msg,
-        type = {},
-        color,
         i;
 
+    msgLen = result.messages.length;
     result.messages.sort(function(a, b){
         return a.line >= b.line && a.col >= b.col;
     });
@@ -37,29 +40,36 @@ module.exports = function(result, file, options) {
         msg = result.messages[i];
         if ( !msg.rollup ) {
 
-            lpush('|   ' + coord(msg.line, msg.col) + ck.gray(' . . . ') + ck.bold.magenta(msg.evidence.trim()));
+            opush('|   ' + coord(msg.line, msg.col) + ck.gray(' . . . ') + ck.bold.magenta(msg.evidence.trim()));
         }
-        lpush('|   ' + pr[msg.type](msg.message) + ck.gray('(' + msg.rule.id + ')'));
-        lpush('|');
+        opush('|   ' + pr[msg.type](msg.message) + ck.gray('(' + msg.rule.id + ')'));
+        opush('|');
         type[msg.type] = i;
 
     }
+}
+
+module.exports = function(result, file, options) {
+    var
+        color;
+
+    prepareMessages(result);
 
     if ( msgLen ) {
 
         color = type.hasOwnProperty('error')? 'red': 'yellow';
 
-        lunshift('|');
-        lunshift('+-' + ck[color].bold(file.path + ': ') +  msgLen + ' issue(s):');
-        lunshift('');
-        lpush('+-' + ck[color].bold(file.path));
+        ounshift('|');
+        ounshift('+-' + ck[color].bold(file.path + ': ') +  msgLen + ' issue(s):');
+        ounshift('');
+        opush('+-' + ck[color].bold(file.path));
 
     } else if ( file.isEmpty ) {
 
-        lpush('\n' + pr.warning(file.path + ' - is empty.'));
+        opush('\n' + pr.warning(file.path + ' - is empty.'));
     } else if ( !options.quiet ) {
 
-        lpush('\n' + pr.ok(file.path));
+        opush('\n' + pr.ok(file.path));
     }
 
     if ( out.length ) {
