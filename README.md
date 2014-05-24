@@ -71,7 +71,8 @@
 - Looks up directory (till the top or user home) for first available `.csslintrc` file.
 - And checks every target directory for `.csslintrc` accordingly applying it to all child targets.
 - Improved visual console feedback.
-- Custom validators hook ups*.
+    <img src="http://dmi3y.github.io/imgs/csslintcli-black.png" alt="Screenshot" height="577" width="643"/>
+- Custom reporters hook ups*.
 
 
 
@@ -85,7 +86,7 @@
 
 ## ToDo
 - [ ] More verbose messages in case of non existing targets.
-- [ ] Collaborate custom validators hook.
+- [ ] Collaborate custom reporters hook.
 
 ## License
 Copyright (c) 2014 Dmitry Lapshukov. Licensed under the MIT license.
