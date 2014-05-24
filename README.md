@@ -71,6 +71,7 @@
 - Looks up directory (till the top or user home) for first available `.csslintrc` file.
 - And checks every target directory for `.csslintrc` accordingly applying it to all child targets.
 - Improved visual console feedback.
+    <img src="http://dmi3y.github.io/imgs/csslintcli-black.png" alt="Screenshot" height="577" width="643"/>
 - Custom validators hook ups*.
 
 
