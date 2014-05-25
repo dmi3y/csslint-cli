@@ -72,6 +72,9 @@ module.exports = function(result, file, options) {
     } else if ( !options.quiet ) {
 
         opush('\n' + pr.ok(file.path));
+    } else if ( result.interrupt ) {
+
+
     }
 
     if ( out.length ) {

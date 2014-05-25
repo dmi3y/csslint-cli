@@ -9,57 +9,27 @@
 'use strict';
 
 var
-    optionsHelper = require('../lib/helper'),
+    helper = require('../lib/helper'),
     rc = require('../lib/rc'),
     v = require('../lib/validators'),
     fu = require('nfsu'),
     u = require('../lib/utils'),
-    printer = require('../lib/printer'),
+
     csslint = require('csslint').CSSLint,
 
-    csslintRules,
-    optionsCli;
-
-function checkParameters(options, targets) {
-    var
-        unknownOptions;
-
-    unknownOptions = v.validateCli(options);
-    if( unknownOptions ) {
-        printer.unknown(unknownOptions);
-        process.exit(1);
-    }
-
-    if ( options.help ) {
-        
-        printer.help();
-        process.exit();
-    } else if ( options.version ) {
-
-        printer.version(csslint.version, '0.0.0');
-        process.exit();
-    } else if ( options['list-rules'] ) {
-
-        csslintRules = csslint.getRules();
-        printer.rules( csslintRules );
-        process.exit();
-    } else if ( !targets.length ) {
-
-        printer.noTargets();
-        process.exit(1);
-    }
-}
+    optionsCli,
+    csslintCli;
 
 function setDefaultOptions(threshold) {
 
     var
         out = {},
-        defaultThreshold = typeof threshold !== 'undefined'? optionsHelper.optionsToExplicitRulesets({t:threshold}).t: 1;
+        defaultThreshold = typeof threshold !== 'undefined'? helper.optionsToExplicitRulesets({t:threshold}).t: 1;
 
     if ( defaultThreshold ) {
 
-        csslintRules = csslint.getRules();
-        u.transform(csslintRules, function(res, it){
+        u.transform(csslint.getRules(), function(res, it){
+
             res[it.id] = defaultThreshold;
         }, out);
     }
@@ -77,7 +47,7 @@ function getReporter( reporter ) {
             reporter = reporter;
         } else if ( typeof reporter === 'string' ) {
 
-            reporter = require(fu.p.resolve(reporter));
+            reporter = require(reporter);
         } else {
             reporter = null;
         }
@@ -125,7 +95,7 @@ function startReports(rulesets) {
         block,
         files,
         rules,
-        rulesCli = optionsHelper.cherryPick(optionsCli, 'main'),
+        rulesCli = helper.cherryPick(optionsCli, 'main'),
         rulesDefault = setDefaultOptions(optionsCli.threshold);
 
     for (base in rulesets) {
@@ -135,7 +105,7 @@ function startReports(rulesets) {
             files = block.files;
 
             rules = block.rules;
-            rules = optionsHelper.mixup(rules, rulesCli, optionsCli.squash);
+            rules = helper.mixup(rules, rulesCli, optionsCli.squash);
             rules = u.merge(rulesDefault, rules);
 
             fileReport(files, rules);
@@ -182,20 +152,27 @@ function getRulesets(targets) {
 
     return rulesets;
 }
- 
+
 function init(options, targets) {
+    var
+        res;
 
+    res = v.checkParameters(options, targets);
 
-    checkParameters(options, targets);
+    if ( res.exit === 'undefined' ) {
 
-    optionsCli = options;
+        optionsCli = options;
 
-    startReports(getRulesets(targets));
+        startReports(getRulesets(targets));
+    }
 
-    process.exit();
+    process.exit(res.exit || 0);
 }
 
-module.exports = {
+
+csslintCli = {
     init: init,
     version: '0.0.0'
 };
+
+module.exports = csslintCli;
