@@ -193,19 +193,19 @@ function workOn(interruption) {
 
 function init(options, targets) {
     var
-        interruption,
+        preflightChecks,
         out;
 
-    interruption = v.checkParameters(options, targets);
+    preflightChecks = v.checkParameters(options, targets);
     optionsCli = options;
-    reporter = getReporter(optionsCli.reporter);
+    reporter = getReporter(options.reporter);
 
-    if ( interruption.hasOwnProperty('exit') ) {
+    if ( preflightChecks.hasOwnProperty('exit') ) {
 
 
-        out = interruption.exit;
-        delete interruption.exit;
-        workOn(interruption);
+        out = preflightChecks.exit;
+        delete preflightChecks.exit;
+        workOn(preflightChecks);
     } else {
 
         startReports(getRulesets(targets));
