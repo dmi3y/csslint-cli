@@ -153,6 +153,30 @@ function getRulesets(targets) {
     return rulesets;
 }
 
+function getInterruptionMsg(item) {
+    var
+        out;
+
+    switch (item) {
+    case 'unknownOptions':
+        break;
+    case 'help':
+        break;
+    case 'list-rules':
+        break;
+    case 'noTargets':
+        break;
+    case 'targetNotExists':
+        break;
+    case 'version':
+        break;
+    default:
+        out = [item];
+        break;
+    }
+    
+}
+
 function workOn(interruption) {
     var
         item,
@@ -160,24 +184,10 @@ function workOn(interruption) {
 
     for (item in interruption) {
         if ( interruption.hasOwnProperty(item) ) {
-            switch (item) {
-            case 'unknownOptions':
-                break;
-            case 'help':
-                break;
-            case 'list-rules':
-                break;
-            case 'noTargets':
-                break;
-            case 'targetNotExists':
-                break;
-            case 'version':
-                break;
-            default:
-                out = [item];
-                break;
-            }
+
+            out = getInterruptionMsg(item);
         }
+
     }
 }
 

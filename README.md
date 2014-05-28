@@ -77,21 +77,21 @@
 
 ## Credits
 
-- [CSSLint](https://github.com/CSSLint/csslint).
-- [Minimist](https://github.com/substack/minimist) CLI parameters parser.
-- [Chalk](https://github.com/sindresorhus/chalk).
-- [JSON Strip Comments](https://github.com/sindresorhus/strip-json-comments).
-- [LoDash](https://github.com/lodash/lodash).
-- [Grunt](https://github.com/gruntjs/grunt).
-    - [Load Grunt tasks](https://github.com/sindresorhus/load-grunt-tasks).
-    - [Time Grunt](https://github.com/sindresorhus/time-grunt).
-    - [Grunt Nodeunit](https://github.com/gruntjs/grunt-contrib-nodeunit).
-    - [Grunt Watch](https://github.com/gruntjs/grunt-contrib-watch).
-    - [Grunt Copy](https://github.com/gruntjs/grunt-contrib-copy).
-    - [Grunt JsHint](https://github.com/gruntjs/grunt-contrib-jshint).
-- [JsHint Stylish](https://github.com/gruntjs/grunt).
-- [Istanbul](https://github.com/gotwarlost/istanbul).
-- [Plato](https://github.com/es-analysis/plato).
+- [CSSLint](https://github.com/CSSLint/csslint)
+- [Minimist](https://github.com/substack/minimist)
+- [Chalk](https://github.com/sindresorhus/chalk)
+- [JSON Strip Comments](https://github.com/sindresorhus/strip-json-comments)
+- [LoDash](https://github.com/lodash/lodash)
+- [Grunt](https://github.com/gruntjs/grunt)
+    - [Load Grunt tasks](https://github.com/sindresorhus/load-grunt-tasks)
+    - [Time Grunt](https://github.com/sindresorhus/time-grunt)
+    - [Grunt Nodeunit](https://github.com/gruntjs/grunt-contrib-nodeunit)
+    - [Grunt Watch](https://github.com/gruntjs/grunt-contrib-watch)
+    - [Grunt Copy](https://github.com/gruntjs/grunt-contrib-copy)
+    - [Grunt JsHint](https://github.com/gruntjs/grunt-contrib-jshint)
+- [JsHint Stylish](https://github.com/gruntjs/grunt)
+- [Istanbul](https://github.com/gotwarlost/istanbul)
+- [Plato](https://github.com/es-analysis/plato)
 
 ## ToDo
 - [ ] More verbose messages in case of non existing targets.

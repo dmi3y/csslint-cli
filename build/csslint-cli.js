@@ -18,7 +18,8 @@ var
     csslint = require('csslint').CSSLint,
 
     optionsCli,
-    csslintCli;
+    csslintCli,
+    reporter;
 
 function setDefaultOptions(threshold) {
 
@@ -55,7 +56,7 @@ function getReporter( reporter ) {
     return reporter;
 }
 
-function fileReport(files, rules) {
+function makeReport(files, rules) {
     var
         len,
         i,
@@ -63,7 +64,6 @@ function fileReport(files, rules) {
         result,
         isEmpty,
         file = {},
-        reporter = getReporter(optionsCli.reporter),
         out = {};
 
     len = files.length;
@@ -108,7 +108,7 @@ function startReports(rulesets) {
             rules = helper.mixup(rules, rulesCli, optionsCli.squash);
             rules = u.merge(rulesDefault, rules);
 
-            fileReport(files, rules);
+            makeReport(files, rules);
 
         }
     }
@@ -153,20 +153,65 @@ function getRulesets(targets) {
     return rulesets;
 }
 
+function getInterruptionMsg(item) {
+    var
+        out;
+
+    switch (item) {
+    case 'unknownOptions':
+        break;
+    case 'help':
+        break;
+    case 'list-rules':
+        break;
+    case 'noTargets':
+        break;
+    case 'targetNotExists':
+        break;
+    case 'version':
+        break;
+    default:
+        out = [item];
+        break;
+    }
+    
+}
+
+function workOn(interruption) {
+    var
+        item,
+        out;
+
+    for (item in interruption) {
+        if ( interruption.hasOwnProperty(item) ) {
+
+            out = getInterruptionMsg(item);
+        }
+
+    }
+}
+
 function init(options, targets) {
     var
-        res;
+        interruption,
+        out;
 
-    res = v.checkParameters(options, targets);
+    interruption = v.checkParameters(options, targets);
+    optionsCli = options;
+    reporter = getReporter(optionsCli.reporter);
 
-    if ( res.exit === 'undefined' ) {
+    if ( interruption.hasOwnProperty('exit') ) {
 
-        optionsCli = options;
+
+        out = interruption.exit;
+        delete interruption.exit;
+        workOn(interruption);
+    } else {
 
         startReports(getRulesets(targets));
     }
 
-    process.exit(res.exit || 0);
+    process.exit(out || 0);
 }
 
 
