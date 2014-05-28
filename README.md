@@ -16,7 +16,7 @@
 ```js
     var csslintCLI = require('csslint-cli');
 
-    csslintCLI(options/*array*/, targets/*array*/);
+    csslintCLI(options/*object*/, targets/*array*/);
 ```
 
 ## Features:
@@ -24,7 +24,7 @@
 - Backward compatability with original CLI.
 
 - Additional parameters:
-    - `--squash` - makes warnings|errors|ignores provided via CLI be gracefully merged into `.csslintrc' rules.
+    - `--squash` - merging warnings|errors|ignores provided via CLI into `.csslintrc' rules instead of overriding.
     - `--config` - path to arbitrary `.csslintrc` file, it will block looking up and checking targets directories for rc file, that's most likely usecase for this option.
     - `--threshold=0|1|2|ignore|warnings|errors` - setup report level for rules which are not explicitly set, default is 1 (warnings).
 
@@ -69,7 +69,7 @@
         }
     ```
 - Looks up directory (till the top or user home) for first available `.csslintrc` file.
-- And checks every target directory for `.csslintrc` accordingly applying it to all child targets.
+- Checks every target directory for `.csslintrc` accordingly applying it to all child targets.
 - Improved visual feedback.
     <img src="http://dmi3y.github.io/imgs/csslintcli-black.png" alt="Screenshot" height="577" width="643"/>
 - Custom reporters hook ups*.
