@@ -70,7 +70,7 @@
     ```
 - Looks up directory (till the top or user home) for first available `.csslintrc` file.
 - Checks every target directory for `.csslintrc` accordingly applying it to all child targets.
-- Improved visual feedback.
+- Improved visual feedback.  
     <img src="http://dmi3y.github.io/imgs/csslintcli-black.png" alt="Screenshot" height="572" width="635"/>
 - Custom reporters hook ups*.
 
