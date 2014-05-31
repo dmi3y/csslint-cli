@@ -21,14 +21,21 @@
 
 ## Features:
 
-- Backward compatability with original CLI.
+- Looks up directory (till the top or user home) for first available `.csslintrc` file.
+
+- Checks every target directory for `.csslintrc` and accordingly applying it to all child targets.
+
+- Multiply targets `csslint-cli --errors=ids styles/a.css styles/b.css styles/c.css legacy/styles/`.
+
+- Improved visual feedback.  
+    <img src="http://dmi3y.github.io/imgs/csslint-cli.gif" alt="Screenshot" />
 
 - Additional parameters:
     - `--squash` - merging warnings|errors|ignores provided via CLI into `.csslintrc' rules instead of overriding.
     - `--config` - path to arbitrary `.csslintrc` file, it will block looking up and checking targets directories for rc file, that's most likely usecase for this option.
     - `--threshold=0|1|2|ignore|warnings|errors` - setup report level for rules which are not explicitly set, default is 1 (warnings).
 
-- Multiply targets `csslint-cli --errors=ids styles/a.css styles/b.css styles/c.css legacy/styles/`.
+- Backward compatability with original CLI.
 
 - `.csslintrc` multiformat support, with comments in json.
 
@@ -68,10 +75,6 @@
             "floats": false // ignore
         }
     ```
-- Looks up directory (till the top or user home) for first available `.csslintrc` file.
-- Checks every target directory for `.csslintrc` accordingly applying it to all child targets.
-- Improved visual feedback.  
-    <img src="http://dmi3y.github.io/imgs/csslint-cli.gif" alt="Screenshot" />
 - Custom reporters hook ups*.
 
 
