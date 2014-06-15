@@ -153,59 +153,67 @@ function getRulesets(targets) {
     return rulesets;
 }
 
-function getInterruptionMsg(item) {
+function checkParameters(options, targets) {
     var
-        out;
+        unknownOptions,
+        out = {
+            ancillary: {}
+        },
+        targetsLen = targets.length;
 
-    switch (item) {
-    case 'unknownOptions':
-        break;
-    case 'help':
-        break;
-    case 'list-rules':
-        break;
-    case 'noTargets':
-        break;
-    case 'targetNotExists':
-        break;
-    case 'version':
-        break;
-    default:
-        out = [item];
-        break;
-    }
-    
-}
+    unknownOptions = v.validateCli(options);
 
-function workOn(interruption) {
-    var
-        item,
-        out;
+    if( unknownOptions ) {
 
-    for (item in interruption) {
-        if ( interruption.hasOwnProperty(item) ) {
+        out.unknownOptions = unknownOptions;
+        out.exit = 1;
+    } else if ( options.help ) {
 
-            out = getInterruptionMsg(item);
+        out.help = options.help;
+        out.exit = 0;
+    } else if ( options.version ) {
+
+        out.version = options.version;
+        out.exit = 0;
+    } else if ( options['list-rules'] ) {
+
+        out['list-rules'] = options['list-rules'];
+        out.exit = 0;
+    } else if ( !targetsLen ) {
+
+        out.noTargets = true;
+        out.exit = 1;
+    } else {
+
+        for ( ;targetsLen--; ) {
+
+            if ( !fu.f.existsSync(targets[targetsLen]) ) {
+
+                out.targetNotExists = targets[targetsLen];
+                out.exit = 1;
+                break;
+            }
         }
 
     }
+
+    return out;
 }
 
 function init(options, targets) {
     var
-        preflightChecks,
+        preflight,
         out;
 
-    preflightChecks = v.checkParameters(options, targets);
+    preflight = checkParameters(options, targets);
     optionsCli = options;
     reporter = getReporter(options.reporter);
 
-    if ( preflightChecks.hasOwnProperty('exit') ) {
+    if ( preflight.hasOwnProperty('exit') ) {
 
-
-        out = preflightChecks.exit;
-        delete preflightChecks.exit;
-        workOn(preflightChecks);
+        out = preflight.exit;
+        delete preflight.exit;
+        reporter(preflight);
     } else {
 
         startReports(getRulesets(targets));

@@ -60,59 +60,5 @@ exports.validators = {
         test.deepEqual(res1, exp1);
         test.deepEqual(res2, exp2);
         test.done();
-    },
-
-    'checkParameters': function(test) {
-        var
-            options,
-            targets,
-            exp,
-            res;
-
-        test.expect(7);
-    
-        options =  {};
-        targets = ['test/assets/'];
-        exp = {};
-        res = v.checkParameters(options, targets);
-        test.deepEqual(res, exp);   
-
-        options =  {'dumdum':'ahaha'};
-        targets = [];
-        exp = {exit:1, unknownOptions:['dumdum']};
-        res = v.checkParameters(options, targets);
-        test.deepEqual(res, exp);     
-
-        options =  {help:'squash'};
-        targets = [];
-        exp = {exit:0, help:'squash'};
-        res = v.checkParameters(options, targets);
-        test.deepEqual(res, exp);   
-
-        options =  {version:true};
-        targets = [];
-        exp = {exit:0, version:true};
-        res = v.checkParameters(options, targets);
-        test.deepEqual(res, exp);   
-
-        options =  {'list-rules':'ids'};
-        targets = [];
-        exp = {exit:0, 'list-rules':'ids'};
-        res = v.checkParameters(options, targets);
-        test.deepEqual(res, exp);   
-
-        options =  {};
-        targets = [];
-        exp = {exit:1, noTargets:true};
-        res = v.checkParameters(options, targets);
-        test.deepEqual(res, exp);  
-
-        options =  {};
-        targets = ['test/donotexist'];
-        exp = {exit:1, targetNotExists:'test/donotexist'};
-        res = v.checkParameters(options, targets);
-        test.deepEqual(res, exp);
-
-        test.done();
     }
 };
