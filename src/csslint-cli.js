@@ -7,114 +7,15 @@
  */
 
 'use strict';
-
 var
-    helper = require('../lib/helper'),
     rc = require('../lib/rc'),
     v = require('../lib/validators'),
     fu = require('nfsu'),
     u = require('../lib/utils'),
 
-    csslint = require('csslint').CSSLint,
+    csslintCli;
 
-    optionsCli,
-    csslintCli,
-    reporter;
-
-function setDefaultOptions(threshold) {
-
-    var
-        out = {},
-        defaultThreshold = typeof threshold !== 'undefined'? helper.optionsToExplicitRulesets({t:threshold}).t: 1;
-
-    if ( defaultThreshold ) {
-
-        u.transform(csslint.getRules(), function(res, it){
-
-            res[it.id] = defaultThreshold;
-        }, out);
-    }
-
-    return out;
-}
-
-function getReporter( reporter ) {
-
-        if ( !reporter ) {
-
-            reporter = require('../reporter/reporter-console-default');
-        } else if ( typeof reporter === 'function' ) {
-
-            reporter = reporter;
-        } else if ( typeof reporter === 'string' ) {
-
-            reporter = require(reporter);
-        } else {
-            reporter = null;
-        }
-
-    return reporter;
-}
-
-function makeReport(files, rules) {
-    var
-        len,
-        i,
-        input,
-        result,
-        isEmpty,
-        file = {},
-        out = {};
-
-    len = files.length;
-
-    for (i = 0; i < len; i += 1) {
-
-        input = fu.readFileStr(files[i]);
-
-        if ( input ) {
-            result = csslint.verify(input, u.clone(rules));
-            isEmpty = false;
-        } else {
-            isEmpty = true;
-        }
-
-        file.path = files[i].replace(process.cwd(), '.');
-        file.fullPath = files[i];
-        file.isEmpty = isEmpty;
-
-
-        out[file.path] = reporter(result, file, optionsCli);
-    }
-    return out;
-}
-
-function startReports(rulesets) {
-    var
-        base,
-        block,
-        files,
-        rules,
-        rulesCli = helper.cherryPick(optionsCli, 'main'),
-        rulesDefault = setDefaultOptions(optionsCli.threshold);
-
-    for (base in rulesets) {
-        if ( rulesets.hasOwnProperty(base) ) {
-            block = rulesets[base];
-
-            files = block.files;
-
-            rules = block.rules;
-            rules = helper.mixup(rules, rulesCli, optionsCli.squash);
-            rules = u.merge(rulesDefault, rules);
-
-            makeReport(files, rules);
-
-        }
-    }
-}
-
-function getRulesets(targets) {
+function getRulesets(options, targets) {
     var
         directOptionsFile,
         scope,
@@ -126,12 +27,12 @@ function getRulesets(targets) {
         cssfiles;
 
     scope = ['.css'];
-    directOptionsFile = optionsCli.config;
+    directOptionsFile = options.config;
     if ( !directOptionsFile ) {
         scope.push('.csslintrc');
     }
 
-    excl = (optionsCli['exclude-list'] || '').split(',');
+    excl = (options['exclude-list'] || '').split(',');
     workset = fu.lookdownFilesByExts(targets, scope, {excl: excl});
 
     cssfiles = workset['.css']; // pre validate css?
@@ -157,9 +58,9 @@ function checkParameters(options, targets) {
     var
         unknownOptions,
         out = {
-            ancillary: {}
+            serviceMsg: {}
         },
-        targetsLen = targets.length;
+        targetsLen =  targets.length;
 
     unknownOptions = v.validateCli(options);
 
@@ -169,11 +70,14 @@ function checkParameters(options, targets) {
         out.exit = 1;
     } else if ( options.help ) {
 
-        out.help = options.help;
+        out.serviceMsg.id = 'help';
+        out.serviceMsg.val = options.help;
         out.exit = 0;
     } else if ( options.version ) {
 
-        out.version = options.version;
+        out.serviceMsg.id = 'version';
+        out.serviceMsg.val = options.version;
+        out.serviceMsg.txt = options.version;
         out.exit = 0;
     } else if ( options['list-rules'] ) {
 
@@ -202,21 +106,19 @@ function checkParameters(options, targets) {
 
 function init(options, targets) {
     var
-        preflight,
-        out;
+        check,
+        out,
+        reporter = require('../lib/reporter');
 
-    preflight = checkParameters(options, targets);
-    optionsCli = options;
-    reporter = getReporter(options.reporter);
+    check = checkParameters(options, targets);
 
-    if ( preflight.hasOwnProperty('exit') ) {
+    if ( check.hasOwnProperty('exit') ) {
 
-        out = preflight.exit;
-        delete preflight.exit;
-        reporter(preflight);
+        out = check.exit;
+        reporter.makeServiceReport(check);
     } else {
 
-        startReports(getRulesets(targets));
+        reporter.startReports(getRulesets(options, targets), options);
     }
 
     process.exit(out || 0);

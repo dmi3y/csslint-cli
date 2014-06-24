@@ -51,7 +51,7 @@ function prepareMessages(result) {
     }
 }
 
-module.exports = function(result, file, options) {
+function mainReporter(result, file, options) {
     var
         color;
 
@@ -72,12 +72,17 @@ module.exports = function(result, file, options) {
     } else if ( !options.quiet ) {
 
         opush('\n' + pr.ok(file.path));
-    } else if ( result.interrupt ) {
-
-
     }
 
     if ( out.length ) {
         pr.log(out.join('\n'));
     }
+}
+
+mainReporter.serviceReporter = function(result, options) {
+
+    console.log(result);
+    
 };
+
+module.exports = mainReporter;
