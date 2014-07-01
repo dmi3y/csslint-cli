@@ -11,6 +11,7 @@
 var
     pr = require('../lib/printer'),
     ck = require('chalk'),
+    u = require('../lib/utils'),
 
     type = {},
     msgLen,
@@ -79,9 +80,26 @@ function mainReporter(result, file, options) {
     }
 }
 
-mainReporter.serviceReporter = function(result, options) {
+mainReporter.serviceReporter = function(result, options, rules) {
+    var
+        msg;
 
     console.log(result);
+
+    if ( result.noTargets ) {
+
+        msg = pr.inf('No targets profided.');
+    } else if ( result.targetNotExists ) {
+
+        msg = pr.error('Target not exits: `' + result.targetNotExists + '`' );
+    } else if ( result['list-rules'] ) {
+
+        u.forEach(rules, function(it, ix) {
+            pr.log(pr.gray(++ix  + ' ') + pr.green.italic(it.id) + '\n\n      ' + it.desc + '\n');
+        });
+    }
+
+    pr.log( msg );
     
 };
 

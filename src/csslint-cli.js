@@ -115,7 +115,7 @@ function init(options, targets) {
     if ( check.hasOwnProperty('exit') ) {
 
         out = check.exit;
-        reporter.makeServiceReport(check);
+        reporter.makeServiceReport(check, options);
     } else {
 
         reporter.startReports(getRulesets(options, targets), options);
