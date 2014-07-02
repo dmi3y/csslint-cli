@@ -80,26 +80,59 @@ function mainReporter(result, file, options) {
     }
 }
 
-mainReporter.serviceReporter = function(result, options, rules) {
+mainReporter.serviceReporter = function(result, options, rules, csslintversion) {
     var
-        msg;
+        unknown,
+        unknownLen,
+        i;
 
     console.log(result);
 
     if ( result.noTargets ) {
 
-        msg = pr.inf('No targets profided.');
+        pr.log(pr.inf('No targets specified.'));
     } else if ( result.targetNotExists ) {
 
-        msg = pr.error('Target not exits: `' + result.targetNotExists + '`' );
+        pr.log(pr.error('Target not exits: `' + result.targetNotExists + '`' ));
+    } else if ( result.unknownOptions ) {
+
+        unknown = result.unknownOptions;
+        unknownLen = unknown.length;
+
+        pr.log('\n' + pr.error('There is ' + unknownLen + ' unknown option(s):'));
+        for( i = 0; i < unknownLen; i += 1 ) {
+            pr.log('    --' + unknown[i] + ' - is not valid option.');
+        }
+        pr.log(pr.magenta('\nSee --help for details.'));
+
+    } else if ( result.help ) {
+        pr.log([
+            '\nUsage:' + pr.gray(' node csslint-cli.js [options]* [file|dir [file|dir]]*'),
+            ' ',
+            'Global Options'
+        ].join("\n"));
+
+        var allOptions = require('../lib/helper').allOptions();
+
+        u.forOwn(allOptions, function(it, ix) {
+            var
+                pad = new Array( 40 - (ix + it.format).length ).join('.');
+            pr.log(
+                pr.green(' --' + ix + (it.format? '=' + it.format: ' ')),
+                pr.gray(pad),
+                it.description
+            );
+        });
+    } else if ( result.version ) {
+        pr.log('Core CSSLint version: ' + pr.magenta(csslintversion));
+        pr.log('CLI version: ' + pr.magenta(result.version));
+
     } else if ( result['list-rules'] ) {
 
         u.forEach(rules, function(it, ix) {
             pr.log(pr.gray(++ix  + ' ') + pr.green.italic(it.id) + '\n\n      ' + it.desc + '\n');
         });
     }
-
-    pr.log( msg );
     
 };
 

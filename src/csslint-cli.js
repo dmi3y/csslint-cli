@@ -23,7 +23,7 @@ function getRulesets(options, targets) {
         excl,
         rulesets = {},
         shuffledObj,
-        rcrules,
+        rcrules, 
         cssfiles;
 
     scope = ['.css'];
@@ -57,9 +57,7 @@ function getRulesets(options, targets) {
 function checkParameters(options, targets) {
     var
         unknownOptions,
-        out = {
-            serviceMsg: {}
-        },
+        out = {},
         targetsLen =  targets.length;
 
     unknownOptions = v.validateCli(options);
@@ -70,14 +68,11 @@ function checkParameters(options, targets) {
         out.exit = 1;
     } else if ( options.help ) {
 
-        out.serviceMsg.id = 'help';
-        out.serviceMsg.val = options.help;
+        out.help = options.help;
         out.exit = 0;
     } else if ( options.version ) {
 
-        out.serviceMsg.id = 'version';
-        out.serviceMsg.val = options.version;
-        out.serviceMsg.txt = options.version;
+        out.version = csslintCli.version;
         out.exit = 0;
     } else if ( options['list-rules'] ) {
 
