@@ -75,7 +75,7 @@
             "floats": false // ignore
         }
     ```
-- Custom reporters hook ups*.
+- Custom reporters hook ups.
 
 
 ## Credits
@@ -95,10 +95,6 @@
 - [JsHint Stylish](https://github.com/gruntjs/grunt)
 - [Istanbul](https://github.com/gotwarlost/istanbul)
 - [Plato](https://github.com/es-analysis/plato)
-
-## ToDo
-- [ ] More verbose messages in case of non existing targets.
-- [ ] Collaborate custom reporters hook.
 
 ## License
 Copyright (c) 2014 Dmitry Lapshukov. Licensed under the MIT license.
