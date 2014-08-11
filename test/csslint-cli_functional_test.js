@@ -31,6 +31,15 @@ function checkReport(data) {
 
 }
 
+function comparePaths(a, b) {
+    var
+        an = a.replace(/\/\\\./, ''),
+        bn = b.replace(/\/\\\./, '');
+
+    return an === bn;
+
+}
+
 exports.csslintCli_functionalTest = {
     'tearDown': function(callback) {
 
@@ -83,7 +92,7 @@ exports.csslintCli_functionalTest = {
                     report = nfsu.readFileJson('./report.json');
 
                 test.expect(3);
-                test.equal(nfsu.path.normalize(report.file.path), nfsu.path.normalize('.\\test\\assets\\a\\a.css'));
+                test.ok(comparePaths(report.file.path, '.\\test\\assets\\a\\a.css'));
                 test.ok(!report.file.isEmpty);
                 test.equal(report.messages.length, 2);
                 test.done();
