@@ -13,8 +13,12 @@ var
 
 fs.writeFileSync('./report.json', '');
 
-module.exports = function(result, file, options) {
+ function reporterJson(result, file, options) {
     result.file = file;
     result.options = options;
     fs.appendFileSync('./report.json', JSON.stringify(result));
-};
+}
+
+reporterJson.serviceReporter = reporterJson;
+
+module.exports = reporterJson;

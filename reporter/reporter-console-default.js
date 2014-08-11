@@ -86,8 +86,6 @@ mainReporter.serviceReporter = function(result, options, rules, csslintversion) 
         unknownLen,
         i;
 
-    console.log(result);
-
     if ( result.noTargets ) {
 
         pr.log(pr.inf('No targets specified.'));

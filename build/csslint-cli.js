@@ -99,7 +99,7 @@ function checkParameters(options, targets) {
     return out;
 }
 
-function init(options, targets) {
+function init(options, targets, done) {
     var
         check,
         out,
@@ -116,7 +116,10 @@ function init(options, targets) {
         reporter.startReports(getRulesets(options, targets), options);
     }
 
-    process.exit(out || 0);
+    if ( typeof done === 'function' ) {
+
+        done.call(undefined, out || 0);
+    }
 }
 
 

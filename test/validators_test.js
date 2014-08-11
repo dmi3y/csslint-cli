@@ -34,7 +34,6 @@ exports.validators = {
 
     'validateCli': function(test) {
         var
-            exp1 =  null,
             base = {
                 "ignore":1,
                 "warnings":1,
@@ -49,7 +48,10 @@ exports.validators = {
                 "squash":1,
                 "threshold":1
             },
+
+            exp1 =  null,
             res1 = v.validateCli(base),
+            
             exp2 = ['dumdum'],
             res2;
 

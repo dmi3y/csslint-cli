@@ -14,9 +14,9 @@
 ##### From scripts
 
 ```js
-    var csslintCLI = require('csslint-cli');
+    var csslintCli = require('csslint-cli');
 
-    csslintCLI(options/*object*/, targets/*array*/);
+    csslintCli.init(options/*object*/, targets/*array*/);
 ```
 
 ## Features:

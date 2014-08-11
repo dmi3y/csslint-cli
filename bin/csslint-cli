@@ -16,4 +16,4 @@ var
     options = parsedCliObj.rules,
     targets = parsedCliObj.targets;
 
-csslintCli.init(options, targets);
+csslintCli.init(options, targets, process.exit);
