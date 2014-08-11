@@ -16,14 +16,14 @@ function checkReport(data) {
             value = data[key];
 
             if ( report.hasOwnProperty(key) ) {
-                
+
                 result = report[key] === data[key];
 
                 if ( !result ) {
                     break;
                 }
             }
-            
+
         }
     }
 
@@ -38,7 +38,7 @@ exports.csslintCli_functionalTest = {
     },
 
     'noTargets': function(test) {
-        
+
         csslintCli.init({
                 reporter: '../reporter/reporter-json.js'
             },
@@ -83,7 +83,7 @@ exports.csslintCli_functionalTest = {
                     report = nfsu.readFileJson('./report.json');
 
                 test.expect(3);
-                test.equal(report.file.path, '.\\test\\assets\\a\\a.css');
+                test.equal(nfsu.path.normalize(report.file.path), nfsu.path.normalize('.\\test\\assets\\a\\a.css'));
                 test.ok(!report.file.isEmpty);
                 test.equal(report.messages.length, 2);
                 test.done();
