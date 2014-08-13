@@ -9,19 +9,20 @@ function checkReport(data) {
         report = nfsu.readFileJson('./report.json'),
         key,
         value,
-        result = false;
+        result;
 
     for( key in data ) {
         if ( data.hasOwnProperty(key) ) {
             value = data[key];
+            result = false;
 
             if ( report.hasOwnProperty(key) ) {
+                result = (JSON.stringify(report[key]) === JSON.stringify(data[key]));
 
-                result = report[key] === data[key];
+            }
 
-                if ( !result ) {
-                    break;
-                }
+            if ( !result ) {
+                break;
             }
 
         }
@@ -77,6 +78,78 @@ exports.csslintCli_functionalTest = {
                 test.expect(1);
                 test.ok(checkReport({
                     targetNotExists: './test/assets/donotexist',
+                    exit: exit
+                }));
+                test.done();
+            }
+        );
+    },
+
+    'unknownOptions': function(test) {
+        csslintCli.init({
+                reporter: '../reporter/reporter-json.js',
+                invalid: 'option'
+            },
+            ['./test/assets/donotexist'],
+            function(exit) {
+
+                test.expect(1);
+                test.ok(checkReport({
+                    unknownOptions: ["invalid"],
+                    exit: exit
+                }));
+                test.done();
+            }
+        );
+    },
+
+    'help': function(test) {
+        csslintCli.init({
+                reporter: '../reporter/reporter-json.js',
+                help: 'topic'
+            },
+            ['./test/assets/donotexist'],
+            function(exit) {
+
+                test.expect(1);
+                test.ok(checkReport({
+                    help: 'topic',
+                    exit: exit
+                }));
+                test.done();
+            }
+        );
+    },
+
+    'version': function(test) {
+        csslintCli.init({
+                reporter: '../reporter/reporter-json.js',
+                version: true
+            },
+            ['./test/assets/donotexist'],
+            function(exit) {
+
+                test.expect(1);
+                test.ok(checkReport({
+                    version: csslintCli.version,
+                    exit: exit
+                }));
+                test.done();
+            }
+        );
+    },
+
+    'list-rules': function(test) {
+        csslintCli.init({
+                reporter: '../reporter/reporter-json.js',
+                'list-rules': 'ids'
+            },
+            ['./test/assets/donotexist'],
+            function(exit) {
+
+                test.expect(1);
+                test.ok(checkReport({
+                    'list-rules': 'ids',
                     exit: exit
                 }));
                 test.done();
