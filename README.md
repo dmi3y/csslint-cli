@@ -4,6 +4,13 @@
 > Alternative CLI for [CSSLint](https://github.com/CSSLint/csslint).
 
 
+## Get it
+
+> npm install csslint-cli -g
+or
+> git clone git@github.com:dmi3y/csslint-cli.git
+> cd csslint-cli && grunt
+
 ## Usage
 
 ##### CLI
