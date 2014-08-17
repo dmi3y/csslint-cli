@@ -1,7 +1,7 @@
 'use strict';
 
 var
-    csslintCli = require('../build/csslint-cli'),
+    csslintCli = require('../src/csslint-cli'),
     nfsu = require('nfsu');
 
 function checkReport(data) {
