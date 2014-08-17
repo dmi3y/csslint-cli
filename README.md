@@ -6,9 +6,11 @@
 
 ## Get it
 
-> npm install csslint-cli -g
+> npm install csslint-cli -g 
+
 or
-> git clone git@github.com:dmi3y/csslint-cli.git
+
+> git clone git@github.com:dmi3y/csslint-cli.git  
 > cd csslint-cli && grunt
 
 ## Usage
