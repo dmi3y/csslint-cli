@@ -169,7 +169,7 @@ exports.csslintCli_functionalTest = {
                 test.expect(3);
                 test.ok(comparePaths(report.file.path, './test/assets/a/a.css'));
                 test.ok(!report.file.isEmpty);
-                test.equal(report.messages.length, 2);
+                test.equal(report.messages.length, 3);
                 test.done();
             }
         );
