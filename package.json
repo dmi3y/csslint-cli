@@ -50,6 +50,7 @@
     "lint": "grunt jshint",
     "test": "grunt test",
     "develop": "grunt watch",
-    "build": "grunt"
+    "build": "grunt",
+    "prepublishOnly": "npm run build"
   }
 }
